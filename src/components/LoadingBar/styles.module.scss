@@ -1,0 +1,27 @@
+.loading {
+    background-color: var(--color-secondary-light);
+    height: 3px;
+    margin: 1em;
+    overflow: hidden;
+    width: 7em;
+    border-radius: 5px;
+}
+
+.loadingBar {
+    animation: side2side 2s ease-in-out infinite;
+    background-color: var(--color-font);
+    height: 100%;
+    width: 50%;
+    border-radius: 5px;
+}
+
+@keyframes side2side {
+    0%, 100% { transform: translateX(-50%); }
+    50%      { transform: translateX(150%); }
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}

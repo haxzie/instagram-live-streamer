@@ -9,7 +9,7 @@ body {
   color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  color: var(--color-font);
   h1,
   h2,
   h3,
@@ -19,7 +19,7 @@ body {
     margin: 0;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    color: var(--font-color);
+    color: var(--color-font);
   }
 
   a {

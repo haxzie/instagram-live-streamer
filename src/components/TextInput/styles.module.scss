@@ -1,0 +1,20 @@
+.fancyInput {
+    background-color: var(--color-secondary-light);
+    padding: 15px 15px;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    outline: none;
+    color: var(--color-font);
+    margin: 5px 0;
+    transition: 0.3s all ease-in-out;
+    align-self: stretch;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.377);
+    }
+    
+    &:focus {
+        border: 2px solid var(--color-primary);
+        box-shadow: 0 3px 15px rgba(244, 0, 252, 0.11);
+    }
+}

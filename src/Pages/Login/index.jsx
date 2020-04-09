@@ -1,0 +1,78 @@
+import React, { useState } from "react";
+import styles from "./styles.module.scss";
+import InstagramLogo from "../../images/icons8-instagram.svg";
+import TextInput from "../../components/TextInput";
+import Button from "../../components/Button";
+import LoadingBar from "../../components/LoadingBar";
+import { loginToInstagram } from "../../lib/igClient";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserProfile, setSignedIn} from "../../store/User/actions";
+
+function Login({ dispatch }) {
+  const [isLoading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [credError, setCredError] = useState(false);
+  const history = useHistory();
+
+  const signIn = async () => {
+    setLoading(true);
+    setCredError(false);
+    const profile = await loginToInstagram({ username, password });
+    if (!profile) {
+      setLoading(false);
+      return setCredError(true);
+    }
+
+    dispatch(setUserProfile(profile));
+    dispatch(setSignedIn(true));
+
+    console.log({ history })
+    history.push('/home');
+    setLoading(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signIn();
+  }
+
+  return (
+    <div className={styles.loginPage}>
+      <img className={styles.instaLogo} src={InstagramLogo} />
+      {isLoading ? (
+        <div className={styles.loaderArea}>
+          <LoadingBar />
+        </div>
+      ) : (
+        <form className={styles.contents} onSubmit={handleSubmit}>
+          <h4 className={styles.formTitle}>Login to instagram</h4>
+          {credError ? (
+            <span className={styles.error}>Invalid username or password</span>
+          ) : (
+            <></>
+          )}
+          <TextInput
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextInput
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <Button onClick={signIn}>Login</Button>
+          <div className={styles.statusTexts}>
+            <p className={styles.status}>Instagram Live Stramer v0.1 Beta</p>
+            <p className={styles.author}>Created by Haxzie</p>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
+
+export default connect()(Login);

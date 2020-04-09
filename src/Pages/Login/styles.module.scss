@@ -1,0 +1,51 @@
+.loginPage {
+    background-color: var(--color-secondary);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loaderArea {
+        display: flex;
+        padding: 10px;
+    }
+
+    .error {
+        color: #f37107;
+    }
+
+    .contents {
+        width: 70%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .instaLogo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .formTitle {
+        padding: 10px 0;
+    }
+
+    .statusTexts {
+        margin-top: 20px;
+        
+        p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .status, .author {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+    }
+    
+}
