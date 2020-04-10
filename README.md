@@ -25,7 +25,7 @@ sudo dpkg -i instagram-live-streamer_0.1.0_amd64.deb
 > Watch the video to get a better idea on how to setup instagram live streamer with OBS Studio
 
 <center>
-<a href="https://youtu.be/7F42Z0mBuok" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/haxzie/instagram-live-streamer/master/public/obs-studio-video"/></a>
+<a href="https://youtu.be/7F42Z0mBuok" target="_blank" rel="noopener"><img src="./public/obs-studio-video.png"/></a>
 </center>
 
 ## Project Setup
