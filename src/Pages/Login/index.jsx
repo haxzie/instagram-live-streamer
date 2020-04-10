@@ -4,10 +4,11 @@ import InstagramLogo from "../../images/icons8-instagram.svg";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
 import LoadingBar from "../../components/LoadingBar";
+import { IgApiClient } from "instagram-private-api";
 import { loginToInstagram } from "../../lib/igClient";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUserProfile, setSignedIn} from "../../store/User/actions";
+import { setUserProfile, setSignedIn, setIgClient} from "../../store/User/actions";
 
 function Login({ dispatch }) {
   const [isLoading, setLoading] = useState(false);
@@ -15,11 +16,12 @@ function Login({ dispatch }) {
   const [password, setPassword] = useState("");
   const [credError, setCredError] = useState(false);
   const history = useHistory();
+  const client = new IgApiClient();
 
   const signIn = async () => {
     setLoading(true);
     setCredError(false);
-    const profile = await loginToInstagram({ username, password });
+    const profile = await loginToInstagram({ client, username, password });
     if (!profile) {
       setLoading(false);
       return setCredError(true);
@@ -27,10 +29,10 @@ function Login({ dispatch }) {
 
     dispatch(setUserProfile(profile));
     dispatch(setSignedIn(true));
-
+    dispatch(setIgClient(client));
     console.log({ history })
-    history.push('/home');
     setLoading(false);
+    history.push('/home');
   };
 
   const handleSubmit = (e) => {
