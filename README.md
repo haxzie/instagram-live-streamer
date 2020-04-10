@@ -6,10 +6,26 @@
 
 ## Download
 
-**Currently, Binaries are only available for Linux (Debian), (Mac and Windows coming soon)**
-[Goto Releases](https://github.com/haxzie/instagram-live-streamer/releases) and download the `.deb` file. To install in Ubuntu run the following command.
+> NOTE: Due to privacy concerns and due to Instagram's terms of services we are not able to provide you with any distributables. If you like the project, you can use the code and build it for yourself.
+
+### Building for Linux
+Clone the project into your local machine and install the dependencies. Make sure you have latest version of Node, NPM and Python installed.
 
 ```bash
+git clone https://github.com/haxzie/instagram-live-streamer.git
+cd instagram-live-streamer
+npm install
+```
+Run the following command to generate installable packages for linux (Debian/Ubuntu). For building for other Operating Systems and architecture, edit the `package.json` and add necessary details inside the `build` property as specified [here](https://www.electron.build/configuration/configuration)
+```bash
+npm run pack
+```
+```bash
+npm run dist
+```
+The above command will generate instabble `.deb` package in the `dist` sub directory of the project. You can cd into the folder and install the package using dpkg.
+```bash
+cd dist
 sudo dpkg -i instagram-live-streamer_0.1.0_amd64.deb
 ```
 
