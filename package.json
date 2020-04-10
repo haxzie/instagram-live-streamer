@@ -1,5 +1,5 @@
 {
-  "name": "taskito",
+  "name": "instagram-live-streamer",
   "version": "0.1.0",
   "private": true,
   "author": {
@@ -8,8 +8,8 @@
     "url": "https://haxzie.com"
   },
   "build": {
-    "appId": "com.haxzie.taskito",
-    "productName": "Taskito",
+    "appId": "com.haxzie.instagram.live",
+    "productName": "Instagram Live Streamer",
     "copyright": "Copyright © 2020 Musthaq Ahamad",
     "mac": {
       "category": "public.app-category.utilities"
