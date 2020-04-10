@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, HashRouter as Router } from "react-router-dom";
 import Login from "../Pages/Login";
 import Home from "../Pages/Home";
 
