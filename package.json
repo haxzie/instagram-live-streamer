@@ -1,7 +1,10 @@
 {
   "name": "instagram-live-streamer",
+  "description": "Create streaming links to instagram live",
   "version": "0.1.0",
   "private": true,
+  "copyright": "Copyright © 2020 Musthaq Ahamad",
+  "licence": "MIT",
   "author": {
     "name": "Musthaq Ahamad",
     "email": "musthu.gm@gmail.com",
@@ -9,10 +12,11 @@
   },
   "build": {
     "appId": "com.haxzie.instagram.live",
-    "productName": "Instagram Live Streamer",
-    "copyright": "Copyright © 2020 Musthaq Ahamad",
-    "mac": {
-      "category": "public.app-category.utilities"
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "files": [
       "build/**/*",
@@ -27,6 +31,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "electron-is-dev": "^1.1.0",
+    "electron-squirrel-startup": "^1.0.0",
     "instagram-private-api": "^1.39.2",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
@@ -40,13 +45,14 @@
   "homepage": "./",
   "scripts": {
     "start": "rescripts start",
-    "build": "rescripts build",
     "test": "rescripts test",
+    "build": "rescripts build",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -mw"
+    "electron-pack": "build -mw",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -68,7 +74,7 @@
     "@rescripts/rescript-env": "^0.0.11",
     "concurrently": "^5.1.0",
     "electron": "^8.0.3",
-    "electron-builder": "^22.4.0",
+    "electron-builder": "^22.4.1",
     "sass-loader": "^8.0.2",
     "typescript": "^3.8.3",
     "wait-on": "^4.0.1"
