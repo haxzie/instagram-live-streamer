@@ -37,3 +37,12 @@ npm install
 ```bash
 npm run electron-dev
 ```
+
+## TODO
+- [ ] Persist user session
+- [ ] Live preview of the stream
+- [ ] Ability to stream with out third party softwares
+- [ ] Ability to see comments and live viewer count
+
+## Disclaimer
+This app or the creator is not associated or affliated to Instagram. This is an unofficial application and stands no liability or warranty of usage. Use at your own risk.
