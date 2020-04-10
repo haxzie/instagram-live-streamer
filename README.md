@@ -1,4 +1,4 @@
-# Instagram Live Streamer
+# Instagram Live Streamer [UnOfficial]
 
 > Stream to Instagram live from PC using OBS Studio or any streaming software.
 
