@@ -6,9 +6,9 @@
 
 ## Download
 
-> NOTE: Due to privacy concerns and due to Instagram's terms of services we are not able to provide you with any distributables. If you like the project, you can use the code and build it for yourself.
+> NOTE: Due to privacy concerns and due to Instagram's terms of services we are not able to provide you with any distributables. If you like the project, you can use the code and build it for yourself using the below commands.
 
-### Building for Linux
+## Building the packages
 Clone the project into your local machine and install the dependencies. Make sure you have latest version of Node, NPM and Python installed.
 
 ```bash
@@ -16,19 +16,29 @@ git clone https://github.com/haxzie/instagram-live-streamer.git
 cd instagram-live-streamer
 npm install
 ```
-Run the following command to generate installable packages for linux (Debian/Ubuntu). For building for other Operating Systems and architecture, edit the `package.json` and add necessary details inside the `build` property as specified [here](https://www.electron.build/configuration/configuration)
+### Linux
+Run the following command to generate installable packages for linux (Debian/Ubuntu).
 ```bash
-npm run pack
+npm run dist:linux
 ```
-```bash
-npm run dist
-```
-The above command will generate instabble `.deb` package in the `dist` sub directory of the project. You can cd into the folder and install the package using dpkg.
+The above command will generate installable `.deb` package in the `dist` sub directory of the project. You can cd into the folder and install the package using dpkg.
 ```bash
 cd dist
 sudo dpkg -i instagram-live-streamer_0.1.0_amd64.deb
 ```
+### Windows
+Run the following command to generate installable packages for Windows.
+```bash
+npm run dist:win
+```
+The above command will generate installable package in the `dist` sub directory of the project. You can then manually install the app using the installer
 
+### MacOS
+Run the following command to generate installable packages for MacOS.
+```bash
+npm run dist:mac
+```
+The above command will generate installable package in the `dist` sub directory of the project. You can then manually install the app using the installer
 ## Usage
 
 - Open the application and sign in using your Instagram username and password.

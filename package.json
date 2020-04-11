@@ -12,11 +12,35 @@
   },
   "build": {
     "appId": "com.haxzie.instagram.live",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "pkg"
+      ]
+    },
     "linux": {
       "target": [
         "AppImage",
         "deb"
       ]
+    },
+    "win": {
+      "target": "NSIS"
     },
     "files": [
       "build/**/*",
@@ -52,7 +76,10 @@
     "preelectron-pack": "yarn build",
     "electron-pack": "build -mw",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
   },
   "eslintConfig": {
     "extends": "react-app"
