@@ -12,6 +12,7 @@
   },
   "build": {
     "appId": "com.haxzie.instagram.live",
+    "extends": null,
     "dmg": {
       "contents": [
         {
@@ -43,6 +44,7 @@
       "target": "NSIS"
     },
     "files": [
+      "public/electron.js",
       "build/**/*",
       "node_modules/**/*"
     ],
