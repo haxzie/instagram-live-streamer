@@ -42,7 +42,7 @@ function Login({ dispatch }) {
 
   return (
     <div className={styles.loginPage}>
-      <img className={styles.instaLogo} src={InstagramLogo} />
+      <img className={styles.instaLogo} src={InstagramLogo} alt="ig_logo"/>
       {isLoading ? (
         <div className={styles.loaderArea}>
           <LoadingBar />

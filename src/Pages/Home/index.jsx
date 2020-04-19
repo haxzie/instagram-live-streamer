@@ -51,7 +51,6 @@ function Home({ client, profile, isLoggedIn }) {
         await client.live.start(broadcastId);
         await client.live.muteComment(broadcastId);
         setLive(true);
-        setMuted(true);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -66,6 +65,7 @@ function Home({ client, profile, isLoggedIn }) {
     await client.live.endBroadcast(broadcastId);
     setLive(false);
     setReady(false);
+    setMuted(false);
     setBroadcastId(null);
     setStreamKey(null);
     setStreamURL(null);
@@ -132,7 +132,7 @@ function Home({ client, profile, isLoggedIn }) {
           <TextInput value={streamURL} readOnly />
           <label>Stream Key</label>
           <TextInput value={streamKey} readOnly />
-          <label>Comments</label>
+          <label>Mute Comments</label>
           <Toggle onClick={unmuteStream} />
         </div>
       ) : (
