@@ -42,7 +42,7 @@ function Login({ dispatch }) {
 
   return (
     <div className={styles.loginPage}>
-      <img className={styles.instaLogo} src={InstagramLogo} />
+      <img className={styles.instaLogo} src={InstagramLogo} alt="ig_logo"/>
       {isLoading ? (
         <div className={styles.loaderArea}>
           <LoadingBar />
@@ -66,7 +66,7 @@ function Login({ dispatch }) {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-          <Button onClick={signIn}>Login</Button>
+          <Button onClick={signIn} type="submit">Login</Button>
           <div className={styles.statusTexts}>
             <p className={styles.status}>Instagram Live Stramer v0.1 Beta</p>
             <p className={styles.author}>Created by Haxzie</p>

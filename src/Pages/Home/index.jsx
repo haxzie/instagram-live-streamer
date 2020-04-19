@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { LiveEntity } from "instagram-private-api";
 import LoadingBar from "../../components/LoadingBar";
 import TextInput from "../../components/TextInput";
+import Toggle from "../../components/Toggle"
 
 function Home({ client, profile, isLoggedIn }) {
   const { username, full_name, profile_pic_url } = profile;
@@ -19,6 +20,7 @@ function Home({ client, profile, isLoggedIn }) {
   const [broadcastId, setBroadcastId] = useState(null);
   const [streamURL, setStreamURL] = useState("");
   const [streamKey, setStreamKey] = useState("");
+  const [isMuted, setMuted] = useState(false);
 
   const startLiveStream = async () => {
     setIsLoading(true);
@@ -47,6 +49,7 @@ function Home({ client, profile, isLoggedIn }) {
     if (broadcastId) {
       try {
         await client.live.start(broadcastId);
+        await client.live.muteComment(broadcastId);
         setLive(true);
         setIsLoading(false);
       } catch (error) {
@@ -62,11 +65,23 @@ function Home({ client, profile, isLoggedIn }) {
     await client.live.endBroadcast(broadcastId);
     setLive(false);
     setReady(false);
+    setMuted(false);
     setBroadcastId(null);
     setStreamKey(null);
     setStreamURL(null);
     setIsLoading(false);
   };
+
+  const unmuteStream = async () => {
+    
+    if (isMuted) {
+      await client.live.unmuteComment(broadcastId);
+      setMuted(false);
+    } else {
+      await client.live.muteComment(broadcastId);
+      setMuted(true);
+    }
+  };  
 
   const getButtonAndLoaders = () => {
     if (isLoading) {
@@ -117,6 +132,8 @@ function Home({ client, profile, isLoggedIn }) {
           <TextInput value={streamURL} readOnly />
           <label>Stream Key</label>
           <TextInput value={streamKey} readOnly />
+          <label>Mute Comments</label>
+          <Toggle onClick={unmuteStream} />
         </div>
       ) : (
         <></>
