@@ -6,7 +6,8 @@
 
 ## Download
 
-> NOTE: Due to privacy concerns and due to Instagram's terms of services we are not able to provide you with any distributables. If you like the project, you can use the code and build it for yourself using the below commands.
+Head over to the [downloads section of the website](https://ig-live.netlify.app/downloads)
+> NOTE: Due to privacy concerns and due to Instagram's terms of services we are providing the app by removing all the branding of Instagram. We do not encourage you to redistribute the application due to this.
 
 ## Building the packages
 Clone the project into your local machine and install the dependencies. Make sure you have latest version of Node, NPM and Python installed.
