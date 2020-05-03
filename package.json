@@ -45,7 +45,7 @@
     },
     "win": {
       "target": "NSIS",
-      "icon": "./build/icon.png"
+      "icon": "./build/icon_256.png"
     },
     "files": [
       "public/electron.js",
