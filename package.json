@@ -1,7 +1,7 @@
 {
   "name": "instagram-live-streamer",
   "description": "Create streaming links to instagram live",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "copyright": "Copyright © 2020 Musthaq Ahamad",
   "licence": "MIT",
@@ -13,6 +13,7 @@
   "build": {
     "appId": "com.haxzie.instagram.live",
     "extends": null,
+    "icon": "./build/icon.png",
     "dmg": {
       "contents": [
         {
@@ -32,20 +33,24 @@
       "target": [
         "dmg",
         "pkg"
-      ]
+      ],
+      "icon": "./build/icon.icns"
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "icon": "./build/icon.icns"
     },
     "win": {
-      "target": "NSIS"
+      "target": "NSIS",
+      "icon": "./build/icon.png"
     },
     "files": [
       "public/electron.js",
       "build/**/*",
+      "build/icon.*",
       "node_modules/**/*"
     ],
     "directories": {

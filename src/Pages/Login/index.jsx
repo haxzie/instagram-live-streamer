@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import InstagramLogo from "../../images/icons8-instagram.svg";
+import StreamonLogo from "../../images/streamon-logo.svg";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
 import LoadingBar from "../../components/LoadingBar";
@@ -42,7 +42,7 @@ function Login({ dispatch }) {
 
   return (
     <div className={styles.loginPage}>
-      <img className={styles.instaLogo} src={InstagramLogo} alt="ig_logo"/>
+      <img className={styles.instaLogo} src={StreamonLogo} alt="ig_logo"/>
       {isLoading ? (
         <div className={styles.loaderArea}>
           <LoadingBar />
@@ -68,7 +68,7 @@ function Login({ dispatch }) {
           />
           <Button onClick={signIn} type="submit">Login</Button>
           <div className={styles.statusTexts}>
-            <p className={styles.status}>Instagram Live Stramer v0.1 Beta</p>
+            <p className={styles.status}>Instagram Live Stramer v0.1.1 Beta</p>
             <p className={styles.author}>Created by Haxzie</p>
           </div>
         </form>
