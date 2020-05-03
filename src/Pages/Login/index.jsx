@@ -68,7 +68,7 @@ function Login({ dispatch }) {
           />
           <Button onClick={signIn} type="submit">Login</Button>
           <div className={styles.statusTexts}>
-            <p className={styles.status}>Instagram Live Stramer v0.1.1 Beta</p>
+            <p className={styles.status}>Instagram Live Streamer v0.1.1 Beta</p>
             <p className={styles.author}>Created by Haxzie</p>
           </div>
         </form>
