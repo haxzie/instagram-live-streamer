@@ -63,6 +63,7 @@ function Home({ client, profile, isLoggedIn }) {
   const stopLiveStream = async () => {
     setIsLoading(true);
     await client.live.endBroadcast(broadcastId);
+    await client.live.addToPostLive(broadcastId);
     setLive(false);
     setReady(false);
     setMuted(false);
