@@ -10,6 +10,7 @@
     .loaderArea {
         display: flex;
         padding: 10px;
+        margin-top: 20px;
     }
 
     .error {
@@ -32,6 +33,13 @@
 
     .formTitle {
         padding: 10px 0;
+    }
+
+    .formDescription {
+        margin: 0 0 10px 0;
+        opacity: 0.7;
+        font-size: 0.8;
+        text-align: center;
     }
 
     .statusTexts {

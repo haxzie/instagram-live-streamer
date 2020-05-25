@@ -17,4 +17,15 @@
     &:active {
         transform: scale(0.96);
     }
+
+    &:disabled {
+        background-color: var(--color-font-light);
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    &.clear {
+        background: transparent;
+        color: var(--font-color);
+    }
 }

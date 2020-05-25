@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { LiveEntity } from "instagram-private-api";
 import LoadingBar from "../../components/LoadingBar";
 import TextInput from "../../components/TextInput";
-import Toggle from "../../components/Toggle"
+import Toggle from "../../components/Toggle";
+import Button from "../../components/Button";
+import { useHistory } from "react-router-dom";
 
-function Home({ client, profile, isLoggedIn }) {
+function Home({ client, isLoggedIn, profile }) {
+  const history = useHistory();
+  if (!(profile && profile.username)) history.push("/");
   const { username, full_name, profile_pic_url } = profile;
-
-//   const username = "haxzie";
-//   const full_name = "Musthaq Ahamad";
-//   const profile_pic_url =
-//     "https://instagram.fblr8-1.fna.fbcdn.net/v/t51.2885-19/s150x150/91504837_161542001687235_603844261191876608_n.jpg?_nc_ht=instagram.fblr8-1.fna.fbcdn.net&_nc_ohc=rX-LGbJ8bzQAX_e2TCf&oh=0e386fabceef373074df1ca8df752460&oe=5EB9BBBC";
-
   const [isLive, setLive] = useState(false);
   const [isReady, setReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +72,6 @@ function Home({ client, profile, isLoggedIn }) {
   };
 
   const unmuteStream = async () => {
-    
     if (isMuted) {
       await client.live.unmuteComment(broadcastId);
       setMuted(false);
@@ -82,7 +79,13 @@ function Home({ client, profile, isLoggedIn }) {
       await client.live.muteComment(broadcastId);
       setMuted(true);
     }
-  };  
+  };
+
+  const logout = async () => {
+    console.log("Logging out");
+    client.account.logout();
+    history.push("/");
+  };
 
   const getButtonAndLoaders = () => {
     if (isLoading) {
@@ -105,9 +108,20 @@ function Home({ client, profile, isLoggedIn }) {
       );
     } else {
       return (
-        <button className={styles.liveButton} onClick={startLiveStream}>
-          Start Live Stream
-        </button>
+        <div
+          style={{
+            display: `flex`,
+            flexDirection: `column`,
+            justifyContent: `center`,
+          }}
+        >
+          <button className={styles.liveButton} onClick={startLiveStream}>
+            Start Live Stream
+          </button>
+          <Button onClick={() => logout()} buttontype="clear">
+            Logout
+          </Button>
+        </div>
       );
     }
   };
@@ -128,6 +142,7 @@ function Home({ client, profile, isLoggedIn }) {
       </div>
       {getButtonAndLoaders()}
       {isReady ? (
+        <>
         <div className={styles.linkFields}>
           <label>Stream URL</label>
           <TextInput value={streamURL} readOnly />
@@ -136,6 +151,7 @@ function Home({ client, profile, isLoggedIn }) {
           <label>Mute Comments</label>
           <Toggle onClick={unmuteStream} />
         </div>
+        </>
       ) : (
         <></>
       )}
@@ -145,9 +161,9 @@ function Home({ client, profile, isLoggedIn }) {
 
 const mapStateToProps = function (state) {
   return {
-    profile: state.user.profile,
     isLoggedIn: state.auth.isLoggedIn,
     client: state.instagram.client,
+    profile: state.user.profile,
   };
 };
 
