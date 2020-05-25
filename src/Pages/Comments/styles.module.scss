@@ -1,0 +1,218 @@
+@import "../../styles/setup/mixins";
+
+.commentsScreen {
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: var(--color-secondary-light);
+  transition: 0.2s all ease-in-out;
+
+  @include respond-below(md) {
+    position: absolute;
+  }
+
+  &.close {
+    @include respond-below(md) {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  .header {
+    padding: 15px;
+    background-color: var(--color-secondary);
+    box-shadow: 0 10px 20px #08080a50;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .headerIcon {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .title {
+      font-size: 1em;
+      flex: 1;
+    }
+
+    .closeIcon {
+      width: 15px;
+      height: 15px;
+      padding: 7px;
+      border-radius: 50%;
+      background-color: var(--color-secondary-light);
+      transition: 0.2s all ease-in-out;
+      margin-left: 15px;
+      display: none;
+
+      @include respond-below(md) {
+        display: inline;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  .comments {
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column-reverse;
+
+    .comment {
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 15px;
+
+      .profilePic {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .textContainer {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 15px;
+        background-color: var(--color-secondary);
+        border-radius: 5px;
+        flex-basis: 1;
+        position: relative;
+        margin-left: 10px;
+
+        &:before {
+          content: "";
+          width: 0px;
+          height: 0px;
+          position: absolute;
+          border-left: 10px solid transparent;
+          border-right: 10px  solid var(--color-secondary);
+          border-top: 10px solid var(--color-secondary);
+          border-bottom: 10px solid transparent;
+          left: -16px;
+          top: 0;
+        }
+
+        .title {
+          // font-weight: bold;
+          font-size: 1em;
+          margin-bottom: 2px;
+        }
+
+        .text {
+          margin: 0;
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  .commentBox {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .commentInput {
+      flex: 1;
+      padding: 15px;
+      background-color: var(--color-secondary);
+      border: 2px solid #404663;
+      border-radius: 50px;
+      outline: none;
+      color: var(--color-font);
+      transition: 0.2s all ease-in-out;
+
+      &:focus {
+        border: 2px solid var(--color-primary);
+      }
+    }
+
+    .sendButton {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 0;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s all ease-in-out;
+      outline: none;
+      background: -moz-linear-gradient(
+        45deg,
+        #e6683c 0%,
+        #dc2743 33%,
+        #cc2366 66%,
+        #bc1888 100%
+      );
+      background: -webkit-linear-gradient(
+        45deg,
+        #e6683c 0%,
+        #dc2743 33%,
+        #cc2366 66%,
+        #bc1888 100%
+      );
+      background: linear-gradient(
+        45deg,
+        #e6683c 0%,
+        #dc2743 33%,
+        #cc2366 66%,
+        #bc1888 100%
+      );
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .commentsDiabled {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .muteIcon {
+      width: 70px;
+      height: 70px;
+      opacity: 0.7;
+    }
+
+    .description {
+      width: 250px;
+      text-align: center;
+      font-size: 0.8em;
+      opacity: 0.7;
+    }
+  }
+}

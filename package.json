@@ -63,6 +63,7 @@
     "@testing-library/user-event": "^7.1.2",
     "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.1.1",
     "instagram-private-api": "^1.39.2",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
@@ -70,7 +71,9 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "simplebar-react": "^2.2.0"
   },
   "main": "public/electron.js",
   "homepage": "./",

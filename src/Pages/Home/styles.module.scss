@@ -1,11 +1,90 @@
+@import "../../styles/setup/mixins";
+
 .homePage {
   width: 100%;
   height: 100%;
   background-color: var(--color-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+  position: relative;
+  overflow: hidden;
+
+
+  .pageContents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: center;
+  }
+
+
+  @include respond-below(md) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ._coloredBackground {
+    background: -moz-linear-gradient(
+      45deg,
+      #e6683c 0%,
+      #dc2743 33%,
+      #cc2366 66%,
+      #bc1888 100%
+    );
+    background: -webkit-linear-gradient(
+      45deg,
+      #e6683c 0%,
+      #dc2743 33%,
+      #cc2366 66%,
+      #bc1888 100%
+    );
+    background: linear-gradient(
+      45deg,
+      #e6683c 0%,
+      #dc2743 33%,
+      #cc2366 66%,
+      #bc1888 100%
+    );
+  }
+
+  .fab {
+    position: absolute;
+    display: none;
+    bottom: 15px;
+    right: 15px;
+    z-index: 99;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: 0.2s all ease-in-out;
+    align-items: center;
+    justify-content: center;
+    @extend ._coloredBackground;
+
+    @include respond-below(md) {
+      display: flex;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      transform: scaleX(-1);
+    }
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 
   .profilePicWrapper {
     padding: 0px;

@@ -1,12 +1,41 @@
-export async function loginToInstagram({ client, username, password }) {
-  client.state.generateDevice(username);
+import { IgApiClient } from "instagram-private-api";
+import Store from "electron-store";
 
-  try {
-    const profile = await client.account.login(username, password);
+const store = new Store();
+const client = new IgApiClient();
 
-    return profile;
-  } catch (error) {
-    console.error(error);
-    return null;
+async function saveSession() {
+  const serialized = await client.state.serialize();
+  delete serialized.constants;
+  store.set("session", serialized);
+  return client;
+}
+
+function isSessionAvailable() {
+  return store.has("session");
+}
+
+async function loadSession() {
+  if (isSessionAvailable()) {
+    const session = store.get("session");
+    await client.state.deserialize(session);
   }
+}
+
+function getClient() {
+  return client;
+}
+
+
+async function removeSession() {
+  store.delete('session');
+}
+
+export default client;
+export {
+  isSessionAvailable,
+  loadSession,
+  getClient,
+  removeSession,
+  saveSession
 }

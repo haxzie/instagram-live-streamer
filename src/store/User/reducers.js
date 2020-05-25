@@ -1,10 +1,15 @@
 import { combineReducers } from "redux";
 import { types } from "./actions";
 
-function instagram(state = { client: null }, action) {
+function instagram(state = { client: null, comments: [] }, action) {
   switch (action.type) {
     case types.SET_IG_CLIENT:
       return { ...state, client: action.client };
+    case types.SAVE_COMMENTS:
+      console.log({ stateComments: state })
+      return { ...state, comments: state.comments? [...action.comments,...state.comments]: action.comments };
+    case types.CLEAR_COMMENTS:
+      return { ...state, comments: [] };
     default:
       return state;
   }
