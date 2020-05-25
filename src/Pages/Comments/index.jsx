@@ -31,7 +31,7 @@ function Comments({
     console.log("Starting to refresh comments....");
     window.refreshInterval = setInterval(() => {
       fetchComments();
-    }, 3000);
+    }, 2000);
     console.log(`Refresh ID: ${window.refreshInterval}`);
     setInProgress(false);
   };
