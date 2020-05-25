@@ -1,10 +1,13 @@
-# Instagram Live Streamer [UnOfficial]
+# Streamon - Instagram Live Streamer [UnOfficial]
 
 > Stream to Instagram live from PC using OBS Studio or any streaming software.
+
+**JOIN THE COMMUNITY - [Telegram](https://t.me/streamonhq) | [Twitter](https://twitter.com/streamonhq)**
 
 ![](./public/cover.png)
 
 ## Download
+> I am constantly updating and fixing things. Follow our [Twitter account](https://twitter.com/streamonhq) to stay in loop with all the new releases, fixes and security updates. To have a chat regarding features or collab, feel free to join our [Telegram channel](https://t.me/streamonhq)
 
 Head over to the [downloads section of the website](https://ig-live.netlify.app/downloads)
 > NOTE: Due to privacy concerns and due to Instagram's terms of services we are providing the app by removing all the branding of Instagram. We do not encourage you to redistribute the application due to this.
