@@ -89,7 +89,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist:mac": "electron-builder --mac",
-    "dist:win": "electron-builder --win",
+    "dist:win": "electron-builder --win --x64 --ia32",
     "dist:linux": "electron-builder --linux"
   },
   "eslintConfig": {
