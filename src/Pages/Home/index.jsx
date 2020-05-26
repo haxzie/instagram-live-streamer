@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { LiveEntity } from "instagram-private-api";
 import LoadingBar from "../../components/LoadingBar";
 import TextInput from "../../components/TextInput";
-import Toggle from "../../components/Toggle";
 import Button from "../../components/Button";
 import { useHistory } from "react-router-dom";
+import CommentIcon from "../../images/comment.svg";
+import Comments from "../Comments";
+import { getClient, removeSession } from "../../lib/igClient";
+import { clearComments } from "../../store/User/actions";
+import CopyIcon from "../../images/copy.svg";
+import copy from "copy-to-clipboard";
 
-function Home({ client, isLoggedIn, profile }) {
+function Home({ profile, dispatch }) {
+  const client = getClient();
   const history = useHistory();
   if (!(profile && profile.username)) history.push("/");
   const { username, full_name, profile_pic_url } = profile;
@@ -18,7 +24,10 @@ function Home({ client, isLoggedIn, profile }) {
   const [broadcastId, setBroadcastId] = useState(null);
   const [streamURL, setStreamURL] = useState("");
   const [streamKey, setStreamKey] = useState("");
-  const [isMuted, setMuted] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+
+  const iUrlRef = useRef();
+  const iKeyRef = useRef();
 
   const startLiveStream = async () => {
     setIsLoading(true);
@@ -47,7 +56,8 @@ function Home({ client, isLoggedIn, profile }) {
     if (broadcastId) {
       try {
         await client.live.start(broadcastId);
-        await client.live.muteComment(broadcastId);
+        await client.live.unmuteComment(broadcastId);
+        dispatch(clearComments());
         setLive(true);
         setIsLoading(false);
       } catch (error) {
@@ -62,27 +72,20 @@ function Home({ client, isLoggedIn, profile }) {
     setIsLoading(true);
     await client.live.endBroadcast(broadcastId);
     await client.live.addToPostLive(broadcastId);
+    if (window.refreshInterval) {
+      clearInterval(window.refreshInterval);
+    }
     setLive(false);
     setReady(false);
-    setMuted(false);
     setBroadcastId(null);
     setStreamKey(null);
     setStreamURL(null);
     setIsLoading(false);
   };
 
-  const unmuteStream = async () => {
-    if (isMuted) {
-      await client.live.unmuteComment(broadcastId);
-      setMuted(false);
-    } else {
-      await client.live.muteComment(broadcastId);
-      setMuted(true);
-    }
-  };
-
   const logout = async () => {
     console.log("Logging out");
+    removeSession();
     client.account.logout();
     history.push("/");
   };
@@ -126,32 +129,75 @@ function Home({ client, isLoggedIn, profile }) {
     }
   };
 
+  const copyUrl = () => {
+    copy(streamURL);
+    iUrlRef.current.select();
+  };
+
+  const copyKey = () => {
+    copy(streamKey);
+    iKeyRef.current.select();
+  };
+
   return (
     <div className={styles.homePage}>
-      <div
-        className={`${styles.profilePicWrapper} ${
-          isLive ? styles.liveBorder : ""
-        }`}
-      >
-        <img src={profile_pic_url} className={styles.profilePic} />
-        {isLive ? <span className={`${styles.liveTag}`}> Live</span> : <></>}
-      </div>
-      <div className={styles.texts}>
-        <h4 className={styles.fullName}>{full_name}</h4>
-        <p className={styles.username}>@{username}</p>
-      </div>
-      {getButtonAndLoaders()}
-      {isReady ? (
-        <>
-        <div className={styles.linkFields}>
-          <label>Stream URL</label>
-          <TextInput value={streamURL} readOnly />
-          <label>Stream Key</label>
-          <TextInput value={streamKey} readOnly />
-          <label>Mute Comments</label>
-          <Toggle onClick={unmuteStream} />
+      <div className={styles.pageContents}>
+        <div
+          className={`${styles.profilePicWrapper} ${
+            isLive ? styles.liveBorder : ""
+          }`}
+        >
+          <img src={profile_pic_url} className={styles.profilePic} />
+          {isLive ? <span className={`${styles.liveTag}`}> Live</span> : <></>}
         </div>
-        </>
+        <div className={styles.texts}>
+          <h4 className={styles.fullName}>{full_name}</h4>
+          <p className={styles.username}>@{username}</p>
+        </div>
+        {getButtonAndLoaders()}
+        {isReady ? (
+          <>
+            <div className={styles.linkFields}>
+              <label>Stream URL</label>
+              <div className={styles.row}>
+                <TextInput value={streamURL} forwardRef={iUrlRef} readOnly />
+                <button className={styles.copyIcon} onClick={copyUrl}>
+                  <img src={CopyIcon} />
+                </button>
+              </div>
+              <label>Stream Key</label>
+              <div className={styles.row}>
+                <TextInput
+                  value={streamKey}
+                  type="password"
+                  forwardRef={iKeyRef}
+                  readOnly
+                />
+                <button className={styles.copyIcon} onClick={copyKey}>
+                  <img src={CopyIcon} />
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
+      {isLive ? (
+        <div className={styles.popupContents}>
+          <div
+            className={`${styles.fab}`}
+            onClick={() => setShowComments(!showComments)}
+          >
+            <img src={CommentIcon} alt="" />
+          </div>
+
+          <Comments
+            open={showComments}
+            broadcastId={broadcastId}
+            clickClose={() => setShowComments(!showComments)}
+          />
+        </div>
       ) : (
         <></>
       )}
@@ -162,7 +208,6 @@ function Home({ client, isLoggedIn, profile }) {
 const mapStateToProps = function (state) {
   return {
     isLoggedIn: state.auth.isLoggedIn,
-    client: state.instagram.client,
     profile: state.user.profile,
   };
 };
