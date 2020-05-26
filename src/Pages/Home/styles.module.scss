@@ -212,6 +212,44 @@
     margin-top: 20px;
     animation-name: slide-up;
     animation-duration: 0.5s;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      input {
+        border-radius: 5px 0 0 5px;
+      }
+
+      button {
+        border: 0;
+        padding: 14px;
+        background-color: rgba(255, 255, 255, 0.185);
+        border-radius: 5px;
+        margin-left: 0px;
+        transition: 0.2s all ease-in-out;
+        outline: none;
+        border-radius: 0 5px 5px 0;
+
+        &:hover {
+          cursor: pointer;
+          background-color: var(--color-primary);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+
+      .copyIcon {
+        
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { LiveEntity } from "instagram-private-api";
@@ -10,6 +10,8 @@ import CommentIcon from "../../images/comment.svg";
 import Comments from "../Comments";
 import { getClient, removeSession } from "../../lib/igClient";
 import { clearComments } from "../../store/User/actions";
+import CopyIcon from "../../images/copy.svg";
+import copy from "copy-to-clipboard";
 
 function Home({ profile, dispatch }) {
   const client = getClient();
@@ -23,6 +25,9 @@ function Home({ profile, dispatch }) {
   const [streamURL, setStreamURL] = useState("");
   const [streamKey, setStreamKey] = useState("");
   const [showComments, setShowComments] = useState(false);
+
+  const iUrlRef = useRef();
+  const iKeyRef = useRef();
 
   const startLiveStream = async () => {
     setIsLoading(true);
@@ -124,6 +129,16 @@ function Home({ profile, dispatch }) {
     }
   };
 
+  const copyUrl = () => {
+    copy(streamURL);
+    iUrlRef.current.select();
+  };
+
+  const copyKey = () => {
+    copy(streamKey);
+    iKeyRef.current.select();
+  };
+
   return (
     <div className={styles.homePage}>
       <div className={styles.pageContents}>
@@ -144,9 +159,24 @@ function Home({ profile, dispatch }) {
           <>
             <div className={styles.linkFields}>
               <label>Stream URL</label>
-              <TextInput value={streamURL} readOnly />
+              <div className={styles.row}>
+                <TextInput value={streamURL} forwardRef={iUrlRef} readOnly />
+                <button className={styles.copyIcon} onClick={copyUrl}>
+                  <img src={CopyIcon} />
+                </button>
+              </div>
               <label>Stream Key</label>
-              <TextInput value={streamKey} readOnly />
+              <div className={styles.row}>
+                <TextInput
+                  value={streamKey}
+                  type="password"
+                  forwardRef={iKeyRef}
+                  readOnly
+                />
+                <button className={styles.copyIcon} onClick={copyKey}>
+                  <img src={CopyIcon} />
+                </button>
+              </div>
             </div>
           </>
         ) : (

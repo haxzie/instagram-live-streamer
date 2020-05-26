@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Inter&display=swap");
 
 body {
   font-size: 16px;
   letter-spacing: 0.02em;
   font-weight: 400px;
   line-height: 1.5em;
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
   color: var(--font-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,7 +17,7 @@ body {
   h5 {
     padding: 0;
     margin: 0;
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: 400;
     color: var(--color-font);
   }
