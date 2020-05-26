@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
 import {
-  IgApiClient,
   IgLoginInvalidUserError,
   IgLoginTwoFactorRequiredError,
   IgCheckpointError,
@@ -11,7 +10,11 @@ import {
 } from "instagram-private-api";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { setSignedIn, setIgClient, setUserProfile } from "../../store/User/actions";
+import {
+  setSignedIn,
+  setUserProfile,
+} from "../../store/User/actions";
+import { getClient, isSessionAvailable, loadSession, saveSession } from "../../lib/igClient";
 
 // forms
 import LoginForm from "./forms/loginForm";
@@ -19,7 +22,8 @@ import CheckpointForm from "./forms/checkpoint";
 import TwoFactorForm from "./forms/twoFactorForm";
 
 function Login({ dispatch }) {
-  const [isLoading, setLoading] = useState(false);
+  const client = getClient();
+  const [isLoading, setLoading] = useState(true);
   const [credError, setCredError] = useState(false);
   const [username, setUsername] = useState(null);
   const [isToTpOn, setIsToTpOn] = useState(false);
@@ -32,22 +36,40 @@ function Login({ dispatch }) {
   };
   const [currentForm, setCurrentForm] = useState(forms.login);
   const history = useHistory();
-  const client = new IgApiClient();
 
   const completeSignIn = async () => {
+    saveSession();
     const profile = await client.account.currentUser();
-    dispatch(setUserProfile(profile))
+    dispatch(setUserProfile(profile));
     dispatch(setSignedIn(true));
-    dispatch(setIgClient(client));
     setLoading(false);
     history.push("/home");
   };
+
+  const restoreSession = async () => {
+    if (isSessionAvailable()) {
+      setLoading(true);
+      try {
+        await loadSession();
+        completeSignIn();
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    restoreSession();
+  }, []);
 
   const signIn = async ({ username, password }) => {
     setLoading(true);
     setCredError(false);
     try {
-      client.state.generateDevice(username);
+      await client.state.generateDevice(username);
       await client.account.login(username, password);
       completeSignIn();
       return;

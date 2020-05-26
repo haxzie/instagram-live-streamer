@@ -28,4 +28,12 @@
         background: transparent;
         color: var(--font-color);
     }
+
+    &.rounded {
+        flex: 0;
+        align-self: center;
+        justify-self: center;
+        border-radius: 50px;
+        padding: 15px 25px;
+    }
 }
