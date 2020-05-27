@@ -9,8 +9,6 @@ import { store, persistor } from "./store";
 import * as Sentry from '@sentry/browser';
 Sentry.init({dsn: process.env.REACT_APP_SENTRY_DSN});
 
-console.log(process.env.REACT_APP_SENTRY_DSN)
-
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
