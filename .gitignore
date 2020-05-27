@@ -24,3 +24,5 @@ yarn-error.log*
 
 out/
 dist/
+
+.env

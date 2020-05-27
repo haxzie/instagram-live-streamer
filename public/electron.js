@@ -1,11 +1,4 @@
 const electron = require("electron");
-const { crashReporter } = electron;
-crashReporter.start({
-  companyName: 'Streamon',
-  productName: 'Streamon',
-  ignoreSystemCrashHandler: true,
-  submitURL: 'https://o399065.ingest.sentry.io/api/5255615/minidump/?sentry_key=f02edc62479c4cc1bb6294479f0cddb2'
-});
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
