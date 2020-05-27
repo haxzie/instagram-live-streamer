@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { configureScope, captureMessage } from "@sentry/browser";
 import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
@@ -25,6 +26,7 @@ import CheckpointForm from "./forms/checkpoint";
 import TwoFactorForm from "./forms/twoFactorForm";
 
 function Login({ dispatch }) {
+  // myUndefinedFunction();
   const client = getClient();
   const [isLoading, setLoading] = useState(true);
   const [credError, setCredError] = useState(false);
@@ -44,6 +46,9 @@ function Login({ dispatch }) {
     saveSession();
     try {
       const profile = await client.account.currentUser();
+      configureScope((scope) => {
+        scope.setUser({ id: profile.username });
+      });
       dispatch(setUserProfile(profile));
       dispatch(setSignedIn(true));
       setLoading(false);
@@ -81,6 +86,7 @@ function Login({ dispatch }) {
     try {
       await client.state.generateDevice(username);
       await client.account.login(username, password);
+      captureMessage(`Logged in ${username}`)
       completeSignIn();
       return;
     } catch (error) {

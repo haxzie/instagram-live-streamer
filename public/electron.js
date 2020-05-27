@@ -1,7 +1,14 @@
 const electron = require("electron");
+const { crashReporter } = electron;
+crashReporter.start({
+  companyName: 'Streamon',
+  productName: 'Streamon',
+  ignoreSystemCrashHandler: true,
+  submitURL: 'https://o399065.ingest.sentry.io/api/5255615/minidump/?sentry_key=f02edc62479c4cc1bb6294479f0cddb2'
+});
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -12,7 +19,8 @@ function createWindow() {
     width: 450,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      sandbox: false
     }
   });
   mainWindow.setMenu(null);
@@ -21,7 +29,7 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-  if (isDev) {
+  if (true) {
     // Open the DevTools.
     //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
     mainWindow.webContents.openDevTools();

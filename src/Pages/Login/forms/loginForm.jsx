@@ -15,13 +15,15 @@ export default function LoginForm({ handleLogin, credError }) {
 
   const openLinkInBrowser = (link) => {
     open(link);
-  }
+  };
 
   return (
     <form className={styles.contents} onSubmit={handleSubmit}>
       <h4 className={styles.formTitle}>Login to instagram</h4>
       {credError ? (
-        <span className={styles.error}>{credError === true? 'Invalid username or password': credError}</span>
+        <span className={styles.error}>
+          {credError === true ? "Invalid username or password" : credError}
+        </span>
       ) : (
         <></>
       )}
@@ -36,16 +38,53 @@ export default function LoginForm({ handleLogin, credError }) {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <Button onClick={() => handleLogin({ username, password })} type="submit">
+      <Button
+        onClick={() => {
+          handleLogin({ username, password });
+        }}
+        type="submit"
+      >
         Login
       </Button>
       <div className={styles.statusTexts}>
         <p className={styles.status}>Instagram Live Streamer v0.1.3</p>
-        <p className={styles.author}>Created by <span className={styles.link} onClick={() => openLinkInBrowser('https://github.com/haxzie')}>Haxzie</span></p>
+        <p className={styles.author}>
+          Created by{" "}
+          <span
+            className={styles.link}
+            onClick={() => openLinkInBrowser("https://github.com/haxzie")}
+          >
+            Haxzie
+          </span>
+        </p>
         <p className={styles.links}>
-        <span className={styles.link} onClick={() => openLinkInBrowser('https://getstreamon.com/downloads')}>Updates</span> •&nbsp;
-        <span className={styles.link} onClick={() => openLinkInBrowser('https://github.com/haxzie/instagram-live-streamer')}>GitHub</span> •&nbsp;
-        <span className={styles.link} onClick={() => openLinkInBrowser('https://twitter.com/streamonhq')}>Community</span></p>
+          <span
+            className={styles.link}
+            onClick={() =>
+              openLinkInBrowser("https://getstreamon.com/downloads")
+            }
+          >
+            Updates
+          </span>{" "}
+          •&nbsp;
+          <span
+            className={styles.link}
+            onClick={() =>
+              openLinkInBrowser(
+                "https://github.com/haxzie/instagram-live-streamer"
+              )
+            }
+          >
+            GitHub
+          </span>{" "}
+          •&nbsp;
+          <span
+            className={styles.link}
+            onClick={() => openLinkInBrowser("https://twitter.com/streamonhq")}
+          >
+            Community
+          </span>
+        </p>
       </div>
     </form>
   );
