@@ -16,6 +16,7 @@ import {
   isSessionAvailable,
   loadSession,
   saveSession,
+  removeSession,
 } from "../../lib/igClient";
 
 // forms
@@ -41,11 +42,17 @@ function Login({ dispatch }) {
 
   const completeSignIn = async () => {
     saveSession();
-    const profile = await client.account.currentUser();
-    dispatch(setUserProfile(profile));
-    dispatch(setSignedIn(true));
-    setLoading(false);
-    history.push("/home");
+    try {
+      const profile = await client.account.currentUser();
+      dispatch(setUserProfile(profile));
+      dispatch(setSignedIn(true));
+      setLoading(false);
+      history.push("/home");
+    } catch (error) {
+      console.error({ error });
+      removeSession();
+      setLoading(false);
+    }
   };
 
   const restoreSession = async () => {
@@ -55,6 +62,7 @@ function Login({ dispatch }) {
         await loadSession();
         completeSignIn();
       } catch (error) {
+        removeSession();
         console.error(error);
         setLoading(false);
       }

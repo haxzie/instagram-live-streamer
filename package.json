@@ -58,20 +58,21 @@
     }
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.8.0",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/user-event": "^10.4.0",
     "copy-to-clipboard": "^3.3.1",
-    "electron-is-dev": "^1.1.0",
+    "electron-is-dev": "^1.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
-    "instagram-private-api": "^1.39.2",
-    "node-sass": "^4.13.1",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
+    "instagram-private-api": "^1.40.1",
+    "node-sass": "^4.14.1",
+    "open": "^7.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "simplebar-react": "^2.2.0"
@@ -108,14 +109,14 @@
     ]
   },
   "devDependencies": {
-    "@rescripts/cli": "^0.0.13",
-    "@rescripts/rescript-env": "^0.0.11",
-    "concurrently": "^5.1.0",
+    "@rescripts/cli": "^0.0.14",
+    "@rescripts/rescript-env": "^0.0.12",
+    "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
-    "electron": "^8.0.3",
-    "electron-builder": "^22.4.1",
+    "electron": "^9.0.0",
+    "electron-builder": "^22.7.0",
     "sass-loader": "^8.0.2",
-    "typescript": "^3.8.3",
-    "wait-on": "^4.0.1"
+    "typescript": "^3.9.3",
+    "wait-on": "^5.0.0"
   }
 }

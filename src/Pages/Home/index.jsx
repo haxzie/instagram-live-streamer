@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
-import { LiveEntity } from "instagram-private-api";
+import { LiveEntity, IgLoginRequiredError } from "instagram-private-api";
 import LoadingBar from "../../components/LoadingBar";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
@@ -31,24 +31,33 @@ function Home({ profile, dispatch }) {
 
   const startLiveStream = async () => {
     setIsLoading(true);
-    const { broadcast_id, upload_url } = await client.live.create({
-      // create a stream in 720x1280 (9:16)
-      previewWidth: 720,
-      previewHeight: 1280,
-      // this message is not necessary, because it doesn't show up in the notification
-      message: "My message",
-    });
-    console.log({ broadcast_id, upload_url });
-    setBroadcastId(broadcast_id);
-    const { stream_key, stream_url } = LiveEntity.getUrlAndKey({
-      broadcast_id,
-      upload_url,
-    });
-    console.log({ stream_key, stream_url });
-    setStreamURL(stream_url);
-    setStreamKey(stream_key);
-    setReady(true);
-    setIsLoading(false);
+    try {
+      const { broadcast_id, upload_url } = await client.live.create({
+        // create a stream in 720x1280 (9:16)
+        previewWidth: 720,
+        previewHeight: 1280,
+        // this message is not necessary, because it doesn't show up in the notification
+        message: "My message",
+      });
+      console.log({ broadcast_id, upload_url });
+      setBroadcastId(broadcast_id);
+      const { stream_key, stream_url } = LiveEntity.getUrlAndKey({
+        broadcast_id,
+        upload_url,
+      });
+      console.log({ stream_key, stream_url });
+      setStreamURL(stream_url);
+      setStreamKey(stream_key);
+      setReady(true);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      if (error instanceof IgLoginRequiredError) {
+        removeSession();
+        history.push("/");
+        // client.account.logout();
+      }
+    }
   };
 
   const goLive = async () => {
@@ -64,14 +73,27 @@ function Home({ profile, dispatch }) {
         setIsLoading(false);
         setReady(false);
         setLive(false);
+        if (error instanceof IgLoginRequiredError) {
+          removeSession();
+          history.push("/");
+        }
       }
     }
   };
 
   const stopLiveStream = async () => {
     setIsLoading(true);
-    await client.live.endBroadcast(broadcastId);
-    await client.live.addToPostLive(broadcastId);
+    try {
+      await client.live.endBroadcast(broadcastId);
+      await client.live.addToPostLive(broadcastId);
+    } catch (error) {
+      if (error instanceof IgLoginRequiredError) {
+        removeSession();
+        history.push("/");
+      }
+      setIsLoading(false);
+      return;
+    }
     if (window.refreshInterval) {
       clearInterval(window.refreshInterval);
     }

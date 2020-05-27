@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../styles.module.scss";
 import TextInput from "../../../components/TextInput";
 import Button from "../../../components/Button";
+import open from "open";
 
 export default function LoginForm({ handleLogin, credError }) {
   const [username, setUsername] = useState("");
@@ -11,6 +12,10 @@ export default function LoginForm({ handleLogin, credError }) {
     e.preventDefault();
     handleLogin({ username, password });
   };
+
+  const openLinkInBrowser = (link) => {
+    open(link);
+  }
 
   return (
     <form className={styles.contents} onSubmit={handleSubmit}>
@@ -35,8 +40,12 @@ export default function LoginForm({ handleLogin, credError }) {
         Login
       </Button>
       <div className={styles.statusTexts}>
-        <p className={styles.status}>Instagram Live Streamer v0.1.1 Beta</p>
-        <p className={styles.author}>Created by Haxzie</p>
+        <p className={styles.status}>Instagram Live Streamer v0.1.3</p>
+        <p className={styles.author}>Created by <span className={styles.link} onClick={() => openLinkInBrowser('https://github.com/haxzie')}>Haxzie</span></p>
+        <p className={styles.links}>
+        <span className={styles.link} onClick={() => openLinkInBrowser('https://getstreamon.com/downloads')}>Updates</span> •&nbsp;
+        <span className={styles.link} onClick={() => openLinkInBrowser('https://github.com/haxzie/instagram-live-streamer')}>GitHub</span> •&nbsp;
+        <span className={styles.link} onClick={() => openLinkInBrowser('https://twitter.com/streamonhq')}>Community</span></p>
       </div>
     </form>
   );
