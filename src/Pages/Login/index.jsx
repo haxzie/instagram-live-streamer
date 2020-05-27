@@ -10,11 +10,13 @@ import {
 } from "instagram-private-api";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { setSignedIn, setUserProfile } from "../../store/User/actions";
 import {
-  setSignedIn,
-  setUserProfile,
-} from "../../store/User/actions";
-import { getClient, isSessionAvailable, loadSession, saveSession } from "../../lib/igClient";
+  getClient,
+  isSessionAvailable,
+  loadSession,
+  saveSession,
+} from "../../lib/igClient";
 
 // forms
 import LoginForm from "./forms/loginForm";
@@ -145,7 +147,7 @@ function Login({ dispatch }) {
       case forms.twoFactor:
         return (
           <TwoFactorForm
-            handleSubmit={twoFASignIn}
+            handle2FA={twoFASignIn}
             onCancel={() => setCurrentForm(forms.login)}
           />
         );
