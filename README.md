@@ -19,6 +19,7 @@ Clone the project into your local machine and install the dependencies. Make sur
 git clone https://github.com/haxzie/instagram-live-streamer.git
 cd instagram-live-streamer
 npm install
+npm run build
 ```
 ### Linux
 Run the following command to generate installable packages for linux (Debian/Ubuntu).
