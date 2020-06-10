@@ -69,6 +69,8 @@ function Comments({
   const addComment = async () => {
     console.log("adding comments...");
     const comment = userComment;
+    // do not comment, if there is no comment text available
+    if (!(comment && comment.length > 0)) return;
     setUserComment('')
     setCommenting(true);
     await client.live.comment(broadcastId, comment);
