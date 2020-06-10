@@ -101,7 +101,7 @@ jobs:
         run: npm run build
         env:
           CI: false
-      - name: Build Linux Variant (deb)
+      - name: Build Windows Variant
         run: npm run dist:win
         env:
           CI: false
