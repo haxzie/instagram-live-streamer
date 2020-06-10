@@ -1,0 +1,43 @@
+name: macOS-build-deploy
+
+on:
+  pull_request:
+    branches: 
+      - master
+  push:
+    branches: 
+      - master
+
+jobs:
+  build_mac_os:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.10.0'
+      
+    - name: "Cache npm deps"  
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+        
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build the electron app
+      run: npm run build
+      env:
+        CI: false
+      
+    - name: Build macOS variant into dist/
+      run: npm run dist:mac
+      env:
+        CI: false
+        CSC_IDENTITY_AUTO_DISCOVERY: false
+        GH_TOKEN: ${{ secrets.GH_TOKEN }} 
