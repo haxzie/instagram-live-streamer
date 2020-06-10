@@ -1,44 +1,110 @@
-name: macOS-build-deploy
+name: Create Release
 
 on:
   pull_request:
-    branches: 
+    branches:
       - master
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
+  build_linux:
+    name: Build Linux Variant
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.10.0'
+
+      - name: "Cache npm deps"
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build production electron app
+        run: npm run build
+        env:
+          CI: false
+          REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      - name: Build Linux Variant (deb)
+        run: npm run dist:linux
+        env:
+          CI: false
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
   build_mac_os:
+    name: Build macOS variant
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Setup node
       uses: actions/setup-node@v1
       with:
         node-version: '12.10.0'
-      
-    - name: "Cache npm deps"  
+
+    - name: "Cache npm deps"
       uses: actions/cache@v2
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-        
+
     - name: Install dependencies
       run: npm install
-    
-    - name: Build the electron app
+
+    - name: Build production electron app
       run: npm run build
       env:
         CI: false
         REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      
-    - name: Build macOS variant into dist/
+    - name: Build macOS variant
       run: npm run dist:mac
       env:
         CI: false
         CSC_IDENTITY_AUTO_DISCOVERY: false
-        GH_TOKEN: ${{ secrets.GH_TOKEN }} 
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+  build_windows:
+    name: Build Windows variant
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.10.0'
+
+      - name: "Cache npm deps"
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build production electron app
+        run: npm run build
+        env:
+          CI: false
+          REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      - name: Build Windows Variant
+        run: npm run dist:win
+        env:
+          CI: false
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
