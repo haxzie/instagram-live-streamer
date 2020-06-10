@@ -12,6 +12,13 @@
 Head over to the [downloads section of the website](https://ig-live.netlify.app/downloads)
 > NOTE: Due to privacy concerns and due to Instagram's terms of services we are providing the app by removing all the branding of Instagram. We do not encourage you to redistribute the application due to this.
 
+## Installation
+
+### macOS
+
+Please refer to [INSTALL.md](./INSTALL.md) file for further installation instructions
+
+
 ## Building the packages
 Clone the project into your local machine and install the dependencies. Make sure you have latest version of Node, NPM and Python installed.
 
