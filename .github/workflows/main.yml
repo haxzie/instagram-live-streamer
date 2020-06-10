@@ -34,6 +34,7 @@ jobs:
       run: npm run build
       env:
         CI: false
+        REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       
     - name: Build macOS variant into dist/
       run: npm run dist:mac
