@@ -29,6 +29,18 @@ jobs:
       with:
         node-version: '12.10.0'
         
+    - name: Cache node modules
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-:  
+        
     - name: Install dependencies
       run: npm install
     
@@ -36,7 +48,6 @@ jobs:
       run: npm run build
       env:
         CI: false
-        
       
     - name: Build macOS variant into dist/
       run: npm run dist:mac
