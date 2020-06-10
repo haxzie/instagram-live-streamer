@@ -35,18 +35,26 @@
         "pkg"
       ],
       "icon": "./build/icon.icns",
-      "publish": ["github"]
+      "publish": [
+        "github"
+      ]
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
       ],
-      "icon": "./build/icon.icns"
+      "icon": "./build/icon.icns",
+      "publish": [
+        "github"
+      ]
     },
     "win": {
       "target": "NSIS",
-      "icon": "./build/icon_256.png"
+      "icon": "./build/icon_256.png",
+      "publish": [
+        "github"
+      ]
     },
     "files": [
       "public/electron.js",
