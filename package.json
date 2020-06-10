@@ -34,7 +34,8 @@
         "dmg",
         "pkg"
       ],
-      "icon": "./build/icon.icns"
+      "icon": "./build/icon.icns",
+      "publish": ["github"]
     },
     "linux": {
       "target": [
