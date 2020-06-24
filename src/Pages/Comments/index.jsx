@@ -9,7 +9,6 @@ import CloseIcon from "../../images/down-arrow.svg";
 import SendIcon from "../../images/direct.svg";
 import Toggle from "../../components/Toggle";
 import MuteIcon from "../../images/mute.svg";
-import Button from "../../components/Button";
 
 function Comments({
   broadcastId,
@@ -38,7 +37,6 @@ function Comments({
 
   const stopComments = async () => {
     setInProgress(true);
-    console.log(`Stop refreshing comments...${window.refreshInterval || null}`);
     if (window.refreshInterval) {
       clearInterval(window.refreshInterval);
       window.refreshInterval = null;
@@ -48,7 +46,6 @@ function Comments({
 
   const fetchComments = async () => {
     try {
-      console.log(`Refreshing comments after ${lastCommentTs}`);
       const { comments } = await client.live.getComment({
         broadcastId,
         lastCommentTs,
@@ -57,7 +54,6 @@ function Comments({
         setCommenting(false);
         comments.forEach((comment) => console.log({ comment }));
         const newLastCommentTs = comments[0].created_at;
-        console.log({ newLastCommentTs });
         lastCommentTs = newLastCommentTs;
         dispatch(saveComments(comments));
       }
