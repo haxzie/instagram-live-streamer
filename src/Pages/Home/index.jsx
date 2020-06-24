@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.scss";
 import { connect } from "react-redux";
 import { LiveEntity, IgLoginRequiredError } from "instagram-private-api";
@@ -12,6 +12,8 @@ import { getClient, removeSession } from "../../lib/igClient";
 import { clearComments } from "../../store/User/actions";
 import CopyIcon from "../../images/copy.svg";
 import copy from "copy-to-clipboard";
+import Timer from "../../components/Timer";
+import useTimer from "../../lib/timerHook";
 
 function Home({ profile, dispatch }) {
   const client = getClient();
@@ -25,6 +27,15 @@ function Home({ profile, dispatch }) {
   const [streamURL, setStreamURL] = useState("");
   const [streamKey, setStreamKey] = useState("");
   const [showComments, setShowComments] = useState(false);
+  const [duration, startTimer, stopTimer, clearTimer] = useTimer(0);
+
+  // stop the live stream if it crosses 1 hour
+  // keeping buffer of 2 seconds to stop the stream 
+  useEffect(() => {
+    if (duration >= 3598) {
+      stopLiveStream();
+    }
+  }, [duration]);
 
   const iUrlRef = useRef();
   const iKeyRef = useRef();
@@ -67,6 +78,8 @@ function Home({ profile, dispatch }) {
         await client.live.start(broadcastId);
         await client.live.unmuteComment(broadcastId);
         dispatch(clearComments());
+        clearTimer();
+        startTimer();
         setLive(true);
         setIsLoading(false);
       } catch (error) {
@@ -92,11 +105,13 @@ function Home({ profile, dispatch }) {
         history.push("/");
       }
       setIsLoading(false);
-      return;
+      // return;
     }
     if (window.refreshInterval) {
       clearInterval(window.refreshInterval);
     }
+    stopTimer();
+    clearTimer();
     setLive(false);
     setReady(false);
     setBroadcastId(null);
@@ -177,7 +192,7 @@ function Home({ profile, dispatch }) {
           <p className={styles.username}>@{username}</p>
         </div>
         {getButtonAndLoaders()}
-        {isReady ? (
+        {isReady && !isLive ? (
           <>
             <div className={styles.linkFields}>
               <label>Stream URL</label>
@@ -204,6 +219,11 @@ function Home({ profile, dispatch }) {
         ) : (
           <></>
         )}
+        {
+          isReady && isLive ? (
+            <Timer seconds={duration} />
+          ): <></>
+        }
       </div>
       {isLive ? (
         <div className={styles.popupContents}>

@@ -1,7 +1,7 @@
 {
   "name": "instagram-live-streamer",
   "description": "Create streaming links to instagram live",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "copyright": "Copyright © 2020 Musthaq Ahamad",
   "licence": "MIT",
@@ -92,7 +92,7 @@
   "scripts": {
     "start": "rescripts start",
     "test": "rescripts test",
-    "build": "rescripts build",
+    "build": "REACT_APP_VERSION=$npm_package_version rescripts build",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",

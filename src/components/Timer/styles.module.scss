@@ -1,0 +1,12 @@
+.timer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        font-size: 1.5rem;
+        padding: 10px;
+        margin-top: 10px;
+    }
+}
