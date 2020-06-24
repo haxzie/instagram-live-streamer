@@ -92,7 +92,7 @@
   "scripts": {
     "start": "rescripts start",
     "test": "rescripts test",
-    "build": "REACT_APP_VERSION=$npm_package_version rescripts build",
+    "build": "rescripts build",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "preelectron-pack": "yarn build",
