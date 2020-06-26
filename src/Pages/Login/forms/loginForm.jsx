@@ -19,7 +19,7 @@ export default function LoginForm({ handleLogin, credError }) {
 
   return (
     <form className={styles.contents} onSubmit={handleSubmit}>
-      <h4 className={styles.formTitle}>Login to instagram</h4>
+      <h4 className={styles.formTitle}>Login to Instagram</h4>
       {credError ? (
         <span className={styles.error}>
           {credError === true ? "Invalid username or password" : credError}
@@ -47,14 +47,13 @@ export default function LoginForm({ handleLogin, credError }) {
         Login
       </Button>
       <div className={styles.statusTexts}>
-        <p className={styles.status}>Instagram Live Streamer v0.1.3</p>
+      <p className={styles.status}>Streamon v{process.env.REACT_APP_VERSION}</p>
         <p className={styles.author}>
-          Created by{" "}
           <span
             className={styles.link}
-            onClick={() => openLinkInBrowser("https://github.com/haxzie")}
+            onClick={() => openLinkInBrowser("https://getstreamon.com/terms")}
           >
-            Haxzie
+            ToS and Privacy Policy
           </span>
         </p>
         <p className={styles.links}>
