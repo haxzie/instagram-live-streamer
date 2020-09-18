@@ -9,6 +9,7 @@ import CloseIcon from "../../images/down-arrow.svg";
 import SendIcon from "../../images/direct.svg";
 import Toggle from "../../components/Toggle";
 import MuteIcon from "../../images/mute.svg";
+import PinIcon from "../../images/pin.svg";
 
 function Comments({
   broadcastId,
@@ -20,10 +21,12 @@ function Comments({
 }) {
   const [isMuted, setMuted] = useState(false);
   const [inProgress, setInProgress] = useState(false);
-  const [userComment, setUserComment] = useState('');
+  const [userComment, setUserComment] = useState("");
   const [isCommenting, setCommenting] = useState(false);
+  const [pinnedComment, setPinnedComment] = useState();
   const client = getClient();
-  let lastCommentTs = comments && comments.length>0? comments[0].created_at : 0;
+  let lastCommentTs =
+    comments && comments.length > 0 ? comments[0].created_at : 0;
 
   const startComments = async () => {
     setInProgress(true);
@@ -62,15 +65,34 @@ function Comments({
     }
   };
 
+  const pinComment = async (comment) => {
+    // check if current comment is pinned
+    if (pinnedComment && pinnedComment.pk === comment.pk) {
+      try {
+        setPinnedComment(null);
+        await client.live.unpinComment(broadcastId, comment.pk);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        setPinnedComment(comment);
+        await client.live.pinComment(broadcastId, comment.pk);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   const addComment = async () => {
     console.log("adding comments...");
     const comment = userComment;
     // do not comment, if there is no comment text available
     if (!(comment && comment.length > 0)) return;
-    setUserComment('')
+    setUserComment("");
     setCommenting(true);
     await client.live.comment(broadcastId, comment);
-  }
+  };
 
   const toggleComments = async () => {
     try {
@@ -101,12 +123,25 @@ function Comments({
   }, []);
 
   const renderComments = (comments) => {
+    console.log(comments);
     return comments.map((comment) => (
       <div key={comment.pk} className={styles.comment}>
         <img className={styles.profilePic} src={comment.user.profile_pic_url} />
         <div className={styles.textContainer}>
           <h4 className={styles.title}>{comment.user.username}</h4>
           <p className={styles.text}>{comment.text}</p>
+        </div>
+        <div
+          className={`${styles.pinIcon} ${
+            pinnedComment
+              ? pinnedComment.pk === comment.pk
+                ? styles.active
+                : ""
+              : ""
+          }`}
+          onClick={() => pinComment(comment)}
+        >
+          <img src={PinIcon} className={styles.icon} />
         </div>
       </div>
     ));
@@ -146,11 +181,20 @@ function Comments({
         <>
           <div className={styles.comments}>{renderComments(comments)}</div>
 
-          <form className={styles.commentBox} onSubmit={(e) => {
-            e.preventDefault();
-            addComment();
-          }}>
-            <input type="text" className={styles.commentInput} value={userComment} onChange={(e) => setUserComment(e.target.value)} placeholder={isCommenting? "Loading...":"Press enter to send"}/>
+          <form
+            className={styles.commentBox}
+            onSubmit={(e) => {
+              e.preventDefault();
+              addComment();
+            }}
+          >
+            <input
+              type="text"
+              className={styles.commentInput}
+              value={userComment}
+              onChange={(e) => setUserComment(e.target.value)}
+              placeholder={isCommenting ? "Loading..." : "Press enter to send"}
+            />
             <button className={styles.sendButton} type="submit">
               <img src={SendIcon} alt="" />
             </button>

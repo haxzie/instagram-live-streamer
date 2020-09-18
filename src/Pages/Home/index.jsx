@@ -48,7 +48,7 @@ function Home({ profile, dispatch }) {
         previewWidth: 720,
         previewHeight: 1280,
         // this message is not necessary, because it doesn't show up in the notification
-        message: "My message",
+        message: "Streamon",
       });
       console.log({ broadcast_id, upload_url });
       setBroadcastId(broadcast_id);
