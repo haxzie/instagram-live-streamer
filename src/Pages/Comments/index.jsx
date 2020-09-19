@@ -30,11 +30,9 @@ function Comments({
 
   const startComments = async () => {
     setInProgress(true);
-    console.log("Starting to refresh comments....");
     window.refreshInterval = setInterval(() => {
       fetchComments();
     }, 2000);
-    console.log(`Refresh ID: ${window.refreshInterval}`);
     setInProgress(false);
   };
 
@@ -55,7 +53,6 @@ function Comments({
       });
       if (comments && comments.length > 0) {
         setCommenting(false);
-        comments.forEach((comment) => console.log({ comment }));
         const newLastCommentTs = comments[0].created_at;
         lastCommentTs = newLastCommentTs;
         dispatch(saveComments(comments));
@@ -85,7 +82,6 @@ function Comments({
   };
 
   const addComment = async () => {
-    console.log("adding comments...");
     const comment = userComment;
     // do not comment, if there is no comment text available
     if (!(comment && comment.length > 0)) return;
@@ -112,7 +108,6 @@ function Comments({
 
   useEffect(() => {
     if (!isMuted && !window.refreshInterval) {
-      console.log("Starting comments from emtpty hook");
       startComments();
     }
     return () => {
@@ -123,7 +118,6 @@ function Comments({
   }, []);
 
   const renderComments = (comments) => {
-    console.log(comments);
     return comments.map((comment) => (
       <div key={comment.pk} className={styles.comment}>
         <img className={styles.profilePic} src={comment.user.profile_pic_url} />

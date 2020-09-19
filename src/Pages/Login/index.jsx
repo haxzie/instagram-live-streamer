@@ -96,13 +96,10 @@ function Login({ dispatch }) {
     } catch (error) {
       console.error({ error });
       if (error instanceof IgLoginBadPasswordError) {
-        console.log(error.text);
         setCredError(`Incorrect Username or Password`);
       } else if (error instanceof IgLoginInvalidUserError) {
-        console.log(error.text);
         setCredError(`Username doesn't exist`);
       } else if (error instanceof IgLoginTwoFactorRequiredError) {
-        console.log("Two factor auth required");
         const {
           username,
           totp_two_factor_on,
@@ -113,7 +110,7 @@ function Login({ dispatch }) {
         setTwoFactorId(two_factor_identifier);
         setCurrentForm(forms.twoFactor);
       } else if (error instanceof IgCheckpointError) {
-        console.log("Checkpoint error");
+        console.error("Checkpoint error");
         console.log({ checkpoint: client.state.checkpoint });
         await client.challenge.auto(true); // requessting sms-code or click "it was me"
         setCurrentForm(forms.checkpoint);
