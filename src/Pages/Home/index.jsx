@@ -17,6 +17,7 @@ import useTimer from "../../lib/timerHook";
 
 function Home({ profile, dispatch }) {
   const client = getClient();
+  console.log({ client })
   const history = useHistory();
   if (!(profile && profile.username)) history.push("/");
   const { username, full_name, profile_pic_url } = profile;

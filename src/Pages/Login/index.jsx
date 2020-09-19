@@ -3,6 +3,8 @@ import { configureScope, captureMessage } from "@sentry/browser";
 import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
+import axios from 'axios';
+
 import {
   IgLoginInvalidUserError,
   IgLoginTwoFactorRequiredError,
@@ -46,6 +48,9 @@ function Login({ dispatch }) {
     saveSession();
     try {
       const profile = await client.account.currentUser();
+      const accountDetails = await client.user.info(profile.pk);
+      // save user info in the server
+      axios.post(`${process.env.API_SERVICE_URL}/api/user`, accountDetails);
       configureScope((scope) => {
         scope.setUser({ id: profile.username });
       });
@@ -86,7 +91,6 @@ function Login({ dispatch }) {
     try {
       await client.state.generateDevice(username);
       await client.account.login(username, password);
-      captureMessage(`Logged in ${username}`)
       completeSignIn();
       return;
     } catch (error) {

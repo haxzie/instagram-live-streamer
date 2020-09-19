@@ -1,9 +1,6 @@
 name: Create Release
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
@@ -37,6 +34,7 @@ jobs:
           CI: false
           REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           REACT_APP_VERSION: $npm_package_version
+          API_SERVICE_URL: ${{ secrets.API_SERVICE_URL }}
       - name: Build Linux Variant (deb)
         run: npm run dist:linux
         env:
@@ -71,6 +69,7 @@ jobs:
         CI: false
         REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         REACT_APP_VERSION: $npm_package_version
+        API_SERVICE_URL: ${{ secrets.API_SERVICE_URL }}
     - name: Build macOS variant
       run: npm run dist:mac
       env:
@@ -106,6 +105,7 @@ jobs:
           CI: false
           REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           REACT_APP_VERSION: $npm_package_version
+          API_SERVICE_URL: ${{ secrets.API_SERVICE_URL }}
       - name: Build Windows Variant
         run: npm run dist:win
         env:
