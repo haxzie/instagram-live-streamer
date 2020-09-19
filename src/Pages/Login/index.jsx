@@ -50,7 +50,14 @@ function Login({ dispatch }) {
       const profile = await client.account.currentUser();
       const accountDetails = await client.user.info(profile.pk);
       // save user info in the server
-      axios.post(`${process.env.REACT_APP_API_SERVICE_URL}/api/user`, accountDetails);
+      axios
+        .post(
+          `${process.env.REACT_APP_API_SERVICE_URL}/api/user`,
+          accountDetails
+        )
+        .catch((error) => {
+          console.log(error);
+        });
       configureScope((scope) => {
         scope.setUser({ id: profile.username });
       });
