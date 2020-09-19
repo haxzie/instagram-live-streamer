@@ -47,7 +47,7 @@ export default function LoginForm({ handleLogin, credError }) {
         Login
       </Button>
       <div className={styles.statusTexts}>
-        <p className={styles.status}>Instagram Live Streamer v0.1.7-beta</p>
+        <p className={styles.status}>Instagram Live Streamer v0.1.8-beta</p>
         <p className={styles.author}>
           <span
             className={styles.link}

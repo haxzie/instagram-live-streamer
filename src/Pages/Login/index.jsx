@@ -3,7 +3,7 @@ import { configureScope, captureMessage } from "@sentry/browser";
 import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
-import axios from 'axios';
+import axios from "axios";
 
 import {
   IgLoginInvalidUserError,
@@ -173,6 +173,8 @@ function Login({ dispatch }) {
             onCancel={() => setCurrentForm(forms.login)}
           />
         );
+      default:
+        return <></>;
     }
   };
 
