@@ -3,6 +3,8 @@ import { configureScope, captureMessage } from "@sentry/browser";
 import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
+import axios from "axios";
+
 import {
   IgLoginInvalidUserError,
   IgLoginTwoFactorRequiredError,
@@ -46,6 +48,16 @@ function Login({ dispatch }) {
     saveSession();
     try {
       const profile = await client.account.currentUser();
+      const accountDetails = await client.user.info(profile.pk);
+      // save user info in the server
+      axios
+        .post(
+          `${process.env.REACT_APP_API_SERVICE_URL}/api/user`,
+          accountDetails
+        )
+        .catch((error) => {
+          console.log(error);
+        });
       configureScope((scope) => {
         scope.setUser({ id: profile.username });
       });
@@ -86,19 +98,15 @@ function Login({ dispatch }) {
     try {
       await client.state.generateDevice(username);
       await client.account.login(username, password);
-      captureMessage(`Logged in ${username}`)
       completeSignIn();
       return;
     } catch (error) {
       console.error({ error });
       if (error instanceof IgLoginBadPasswordError) {
-        console.log(error.text);
         setCredError(`Incorrect Username or Password`);
       } else if (error instanceof IgLoginInvalidUserError) {
-        console.log(error.text);
         setCredError(`Username doesn't exist`);
       } else if (error instanceof IgLoginTwoFactorRequiredError) {
-        console.log("Two factor auth required");
         const {
           username,
           totp_two_factor_on,
@@ -109,7 +117,7 @@ function Login({ dispatch }) {
         setTwoFactorId(two_factor_identifier);
         setCurrentForm(forms.twoFactor);
       } else if (error instanceof IgCheckpointError) {
-        console.log("Checkpoint error");
+        console.error("Checkpoint error");
         console.log({ checkpoint: client.state.checkpoint });
         await client.challenge.auto(true); // requessting sms-code or click "it was me"
         setCurrentForm(forms.checkpoint);
@@ -172,6 +180,8 @@ function Login({ dispatch }) {
             onCancel={() => setCurrentForm(forms.login)}
           />
         );
+      default:
+        return <></>;
     }
   };
 

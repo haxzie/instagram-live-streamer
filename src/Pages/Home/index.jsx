@@ -50,13 +50,11 @@ function Home({ profile, dispatch }) {
         // this message is not necessary, because it doesn't show up in the notification
         message: "Streamon",
       });
-      console.log({ broadcast_id, upload_url });
       setBroadcastId(broadcast_id);
       const { stream_key, stream_url } = LiveEntity.getUrlAndKey({
         broadcast_id,
         upload_url,
       });
-      console.log({ stream_key, stream_url });
       setStreamURL(stream_url);
       setStreamKey(stream_key);
       setReady(true);
@@ -121,7 +119,6 @@ function Home({ profile, dispatch }) {
   };
 
   const logout = async () => {
-    console.log("Logging out");
     removeSession();
     client.account.logout();
     history.push("/");
