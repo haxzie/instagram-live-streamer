@@ -1,7 +1,7 @@
 {
   "name": "instagram-live-streamer",
   "description": "Create streaming links to instagram live",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": true,
   "copyright": "Copyright © 2020 Musthaq Ahamad",
   "licence": "MIT",
@@ -83,9 +83,10 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
+    "semver": "^7.3.2",
     "simplebar-react": "^2.2.0"
   },
   "main": "public/electron.js",
