@@ -3,6 +3,7 @@ import styles from "../styles.module.scss";
 import TextInput from "../../../components/TextInput";
 import Button from "../../../components/Button";
 import open from "open";
+const appVersion = window.require("electron").remote.app.getVersion();
 
 export default function LoginForm({ handleLogin, credError }) {
   const [username, setUsername] = useState("");
@@ -47,7 +48,7 @@ export default function LoginForm({ handleLogin, credError }) {
         Login
       </Button>
       <div className={styles.statusTexts}>
-        <p className={styles.status}>Instagram Live Streamer v0.1.8</p>
+      <p className={styles.status}>Instagram Live Streamer { appVersion }</p>
         <p className={styles.author}>
           <span
             className={styles.link}

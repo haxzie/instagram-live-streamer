@@ -11,6 +11,11 @@
   position: relative;
   overflow: hidden;
 
+  .animate {
+    transition: 0.3s all ease-in-out;
+    animation-name: slide-up;
+    animation-duration: 0.5s;
+  }
 
   .pageContents {
     display: flex;
@@ -19,7 +24,6 @@
     justify-content: center;
     justify-content: center;
   }
-
 
   @include respond-below(md) {
     display: flex;
@@ -52,33 +56,47 @@
     );
   }
 
-  .fab {
+  .commentsFab {
     position: absolute;
     display: none;
-    bottom: 15px;
-    right: 15px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
     z-index: 99;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 150px;
+    height: auto;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px 15px 0 0;
     transition: 0.2s all ease-in-out;
     align-items: center;
     justify-content: center;
-    @extend ._coloredBackground;
+    font-weight: bold;
+    transform: translateY(10px);
+    // @extend ._coloredBackground;
+    background: var(--color-primary);
+    opacity: 0.8;
 
     @include respond-below(md) {
       display: flex;
     }
 
     img {
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
       transform: scaleX(-1);
+      // display: none;
     }
 
     &:hover {
       cursor: pointer;
-      transform: scale(1.1);
+      opacity: 1;
+      transform: translateY(0px);
+      // transform: scale(1.1);
     }
 
     &:active {
@@ -153,6 +171,10 @@
     }
   }
 
+  .messageInput {
+    margin: 10px 0;
+  }
+
   .liveButton,
   .stopButton,
   .goLiveButton {
@@ -164,6 +186,7 @@
     animation-name: slide-up;
     animation-duration: 0.5s;
     outline: none;
+    align-self: center;
 
     &:hover {
       cursor: pointer;
@@ -243,7 +266,6 @@
       }
 
       .copyIcon {
-        
         img {
           width: 20px;
           height: 20px;
@@ -264,7 +286,7 @@
 
 @keyframes slide-up {
   0% {
-    transform: translateY(50px);
+    transform: translateY(30px);
     opacity: 0;
   }
 

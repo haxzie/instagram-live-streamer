@@ -10,7 +10,7 @@
   max-width: 600px;
   height: 100%;
   margin: 0 auto;
-  background-color: var(--color-secondary-light);
+  background-color: var(--color-secondary);
   transition: 0.2s all ease-in-out;
 
   @include respond-below(md) {
@@ -27,7 +27,7 @@
   .header {
     padding: 15px;
     background-color: var(--color-secondary);
-    box-shadow: 0 10px 20px #08080a50;
+    // box-shadow: 0 10px 20px #08080a50;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -92,7 +92,7 @@
         display: flex;
         flex-direction: column;
         padding: 10px 15px;
-        background-color: var(--color-secondary);
+        background-color: var(--color-secondary-light);
         border-radius: 5px;
         flex-basis: 1;
         flex-grow: 0;
@@ -107,8 +107,8 @@
           height: 0px;
           position: absolute;
           border-left: 10px solid transparent;
-          border-right: 10px solid var(--color-secondary);
-          border-top: 10px solid var(--color-secondary);
+          border-right: 10px solid var(--color-secondary-light);
+          border-top: 10px solid var(--color-secondary-light);
           border-bottom: 10px solid transparent;
           left: -16px;
           top: 0;
@@ -177,9 +177,9 @@
     .commentInput {
       flex: 1;
       padding: 15px;
-      background-color: var(--color-secondary);
-      border: 2px solid #404663;
-      border-radius: 50px;
+      background-color: var(--color-secondary-light);
+      border: 2px solid transparent;
+      border-radius: 5px 0 0 5px;
       outline: none;
       color: var(--color-font);
       transition: 0.2s all ease-in-out;
@@ -191,36 +191,38 @@
 
     .sendButton {
       width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 0;
-      margin-left: 10px;
+      height: 52px;
+      border-radius: 0 5px 5px 0;
+      border: 2px solid var(--color-primary);
+      margin-left: 0px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: 0.2s all ease-in-out;
       outline: none;
-      background: -moz-linear-gradient(
-        45deg,
-        #e6683c 0%,
-        #dc2743 33%,
-        #cc2366 66%,
-        #bc1888 100%
-      );
-      background: -webkit-linear-gradient(
-        45deg,
-        #e6683c 0%,
-        #dc2743 33%,
-        #cc2366 66%,
-        #bc1888 100%
-      );
-      background: linear-gradient(
-        45deg,
-        #e6683c 0%,
-        #dc2743 33%,
-        #cc2366 66%,
-        #bc1888 100%
-      );
+      opacity: 0.8;
+      background: var(--color-primary);
+      // background: -moz-linear-gradient(
+      //   45deg,
+      //   #e6683c 0%,
+      //   #dc2743 33%,
+      //   #cc2366 66%,
+      //   #bc1888 100%
+      // );
+      // background: -webkit-linear-gradient(
+      //   45deg,
+      //   #e6683c 0%,
+      //   #dc2743 33%,
+      //   #cc2366 66%,
+      //   #bc1888 100%
+      // );
+      // background: linear-gradient(
+      //   45deg,
+      //   #e6683c 0%,
+      //   #dc2743 33%,
+      //   #cc2366 66%,
+      //   #bc1888 100%
+      // );
 
       img {
         width: 24px;
@@ -228,7 +230,8 @@
       }
 
       &:hover {
-        transform: scale(1.1);
+        // transform: scale(1.1);
+        opacity: 1;
         cursor: pointer;
       }
 

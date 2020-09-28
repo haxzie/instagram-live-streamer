@@ -1,10 +1,9 @@
 const electron = require("electron");
-
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
-
+ 
 let mainWindow;
 
 function createWindow() {
@@ -14,7 +13,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       sandbox: false
-    }
+    },
   });
   mainWindow.setMenu(null);
   mainWindow.loadURL(

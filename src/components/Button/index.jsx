@@ -11,6 +11,8 @@ export default function Button(props) {
           return styles.clear;
         case "rounded":
           return styles.rounded;
+        case "ghost":
+          return styles.ghost
       }
     }
   };
