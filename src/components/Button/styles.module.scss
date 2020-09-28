@@ -36,4 +36,9 @@
         border-radius: 50px;
         padding: 15px 25px;
     }
+
+    &.ghost {
+        background: var(--color-secondary-light);
+        color: var(--font-color);
+    }
 }

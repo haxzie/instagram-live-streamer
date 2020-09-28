@@ -11,6 +11,11 @@
   position: relative;
   overflow: hidden;
 
+  .animate {
+    transition: 0.3s all ease-in-out;
+    animation-name: slide-up;
+    animation-duration: 0.5s;
+  }
 
   .pageContents {
     display: flex;
@@ -19,7 +24,6 @@
     justify-content: center;
     justify-content: center;
   }
-
 
   @include respond-below(md) {
     display: flex;
@@ -153,6 +157,10 @@
     }
   }
 
+  .messageInput {
+    margin: 10px 0;
+  }
+
   .liveButton,
   .stopButton,
   .goLiveButton {
@@ -164,6 +172,7 @@
     animation-name: slide-up;
     animation-duration: 0.5s;
     outline: none;
+    align-self: center;
 
     &:hover {
       cursor: pointer;
@@ -243,7 +252,6 @@
       }
 
       .copyIcon {
-        
         img {
           width: 20px;
           height: 20px;
@@ -264,7 +272,7 @@
 
 @keyframes slide-up {
   0% {
-    transform: translateY(50px);
+    transform: translateY(30px);
     opacity: 0;
   }
 

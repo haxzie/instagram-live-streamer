@@ -24,13 +24,14 @@ function Home({ profile, dispatch }) {
   const [isReady, setReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [broadcastId, setBroadcastId] = useState(null);
+  const [streamTitle, setStreamTitle] = useState("");
   const [streamURL, setStreamURL] = useState("");
   const [streamKey, setStreamKey] = useState("");
   const [showComments, setShowComments] = useState(false);
   const [duration, startTimer, stopTimer, clearTimer] = useTimer(0);
 
   // stop the live stream if it crosses 1 hour
-  // keeping buffer of 2 seconds to stop the stream 
+  // keeping buffer of 2 seconds to stop the stream
   useEffect(() => {
     if (duration >= 3598) {
       stopLiveStream();
@@ -47,8 +48,7 @@ function Home({ profile, dispatch }) {
         // create a stream in 720x1280 (9:16)
         previewWidth: 720,
         previewHeight: 1280,
-        // this message is not necessary, because it doesn't show up in the notification
-        message: "Streamon",
+        message: streamTitle,
       });
       setBroadcastId(broadcast_id);
       const { stream_key, stream_url } = LiveEntity.getUrlAndKey({
@@ -110,6 +110,7 @@ function Home({ profile, dispatch }) {
     }
     stopTimer();
     clearTimer();
+    setStreamTitle("");
     setLive(false);
     setReady(false);
     setBroadcastId(null);
@@ -151,10 +152,31 @@ function Home({ profile, dispatch }) {
             flexDirection: `column`,
             justifyContent: `center`,
           }}
+          className={styles.animate}
         >
-          <button className={styles.liveButton} onClick={startLiveStream}>
-            Start Live Stream
-          </button>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              startLiveStream();
+            }}
+            style={{
+              display: `flex`,
+              flexDirection: `column`,
+              justifyContent: `center`,
+            }}
+          >
+            <TextInput
+              style={{
+                margin: `15px 0`,
+                minWidth: `300px`,
+              }}
+              value={streamTitle}
+              onChange={(e) => setStreamTitle(e.target.value)}
+              placeholder="What are you streaming?"
+              autoFocus={true}
+            />
+            <button className={styles.liveButton}>Start Live Stream</button>
+          </form>
           <Button onClick={() => logout()} buttontype="clear">
             Logout
           </Button>
@@ -211,16 +233,15 @@ function Home({ profile, dispatch }) {
                   <img src={CopyIcon} />
                 </button>
               </div>
+              <Button onClick={() => setReady(false)} buttontype="ghost">
+                Cancel
+              </Button>
             </div>
           </>
         ) : (
           <></>
         )}
-        {
-          isReady && isLive ? (
-            <Timer seconds={duration} />
-          ): <></>
-        }
+        {isReady && isLive ? <Timer seconds={duration} /> : <></>}
       </div>
       {isLive ? (
         <div className={styles.popupContents}>
