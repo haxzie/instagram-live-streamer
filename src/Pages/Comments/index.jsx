@@ -193,7 +193,6 @@ function Comments({
               value={userComment}
               onChange={(e) => setUserComment(e.target.value)}
               placeholder={isCommenting ? "Loading..." : "Type and Press enter to send"}
-              autofocus
             />
             <button className={styles.sendButton} type="submit">
               <img src={SendIcon} alt="" />
