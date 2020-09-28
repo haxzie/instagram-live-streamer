@@ -246,10 +246,11 @@ function Home({ profile, dispatch }) {
       {isLive ? (
         <div className={styles.popupContents}>
           <div
-            className={`${styles.fab}`}
+            className={`${styles.commentsFab}`}
             onClick={() => setShowComments(!showComments)}
           >
             <img src={CommentIcon} alt="" />
+            Comments
           </div>
 
           <Comments
