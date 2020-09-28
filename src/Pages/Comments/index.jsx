@@ -87,7 +87,12 @@ function Comments({
     if (!(comment && comment.length > 0)) return;
     setUserComment("");
     setCommenting(true);
-    await client.live.comment(broadcastId, comment);
+    try {
+      await client.live.comment(broadcastId, comment);
+    } catch (error) {
+      console.error(error);
+      clickClose();
+    }
   };
 
   const toggleComments = async () => {
@@ -187,7 +192,8 @@ function Comments({
               className={styles.commentInput}
               value={userComment}
               onChange={(e) => setUserComment(e.target.value)}
-              placeholder={isCommenting ? "Loading..." : "Press enter to send"}
+              placeholder={isCommenting ? "Loading..." : "Type and Press enter to send"}
+              autofocus
             />
             <button className={styles.sendButton} type="submit">
               <img src={SendIcon} alt="" />

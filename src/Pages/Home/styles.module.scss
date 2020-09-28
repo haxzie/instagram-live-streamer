@@ -64,9 +64,9 @@
     left: 0;
     margin: 0 auto;
     z-index: 99;
-    width: 200px;
+    width: 150px;
     height: auto;
-    padding: 10px;
+    padding: 15px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,23 +75,27 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    @extend ._coloredBackground;
-    // background: var(--color-secondary-light);
+    transform: translateY(10px);
+    // @extend ._coloredBackground;
+    background: var(--color-primary);
+    opacity: 0.8;
 
     @include respond-below(md) {
       display: flex;
     }
 
     img {
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
       margin-right: 10px;
       transform: scaleX(-1);
-      display: none;
+      // display: none;
     }
 
     &:hover {
       cursor: pointer;
+      opacity: 1;
+      transform: translateY(0px);
       // transform: scale(1.1);
     }
 
