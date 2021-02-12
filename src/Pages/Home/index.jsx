@@ -14,6 +14,13 @@ import CopyIcon from "../../images/copy.svg";
 import copy from "copy-to-clipboard";
 import Timer from "../../components/Timer";
 import useTimer from "../../lib/timerHook";
+import config from "../../utils/config";
+import open from "open";
+import { trackEvent, eventCategory } from "../../lib/analytics";
+
+const openLinkInBrowser = (link) => {
+  open(link);
+};
 
 function Home({ profile, dispatch }) {
   const client = getClient();
@@ -33,8 +40,14 @@ function Home({ profile, dispatch }) {
   // stop the live stream if it crosses 1 hour
   // keeping buffer of 2 seconds to stop the stream
   useEffect(() => {
-    if (duration >= 3598) {
+    if (duration >= config.STREAM_LIMIT - 2) {
       stopLiveStream();
+      trackEvent({
+        category: eventCategory.APP_USAGE,
+        action: "Live Stopped",
+        label: "Live Stream",
+        value: duration,
+      });
     }
   }, [duration]);
 
@@ -59,6 +72,7 @@ function Home({ profile, dispatch }) {
       setStreamKey(stream_key);
       setReady(true);
       setIsLoading(false);
+      trackEvent({ category: eventCategory.APP_USAGE, action: "Live Created" });
     } catch (error) {
       setIsLoading(false);
       if (error instanceof IgLoginRequiredError) {
@@ -80,10 +94,18 @@ function Home({ profile, dispatch }) {
         startTimer();
         setLive(true);
         setIsLoading(false);
+        trackEvent({
+          category: eventCategory.APP_USAGE,
+          action: "Live Started",
+        });
       } catch (error) {
         setIsLoading(false);
         setReady(false);
         setLive(false);
+        trackEvent({
+          category: eventCategory.APP_USAGE,
+          action: "Live Start Failed",
+        });
         if (error instanceof IgLoginRequiredError) {
           removeSession();
           history.push("/");
@@ -96,7 +118,15 @@ function Home({ profile, dispatch }) {
     setIsLoading(true);
     try {
       await client.live.endBroadcast(broadcastId);
-      await client.live.addToPostLive(broadcastId);
+      if (config.SAVE_BROADCAST_TO_STORIES) {
+        await client.live.addToPostLive(broadcastId);
+      }
+      trackEvent({
+        category: eventCategory.APP_USAGE,
+        action: "Live Ended",
+        label: "Live Stream",
+        value: duration,
+      });
     } catch (error) {
       if (error instanceof IgLoginRequiredError) {
         removeSession();
@@ -122,6 +152,10 @@ function Home({ profile, dispatch }) {
   const logout = async () => {
     removeSession();
     client.account.logout();
+    trackEvent({
+      category: eventCategory.USER_INTERACTION,
+      action: "Logout",
+    });
     history.push("/");
   };
 
@@ -154,6 +188,20 @@ function Home({ profile, dispatch }) {
           }}
           className={styles.animate}
         >
+          <p className={styles.info}>
+            Please make sure Live Archives are enabled in your account or you
+            are recording the stream on your broadcasting software.{" "}
+            <span
+              style={{ color: "var(--color-primary)", cursor: "pointer" }}
+              onClick={() =>
+                openLinkInBrowser(
+                  "https://getstreamon.com/blog/save-your-livestreams-to-igtv"
+                )
+              }
+            >
+              Read More
+            </span>
+          </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
