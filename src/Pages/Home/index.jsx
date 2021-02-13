@@ -16,7 +16,6 @@ import Timer from "../../components/Timer";
 import useTimer from "../../lib/timerHook";
 import config from "../../utils/config";
 import open from "open";
-import { trackEvent, eventCategory } from "../../lib/analytics";
 
 const openLinkInBrowser = (link) => {
   open(link);
@@ -42,12 +41,6 @@ function Home({ profile, dispatch }) {
   useEffect(() => {
     if (duration >= config.STREAM_LIMIT - 2) {
       stopLiveStream();
-      trackEvent({
-        category: eventCategory.APP_USAGE,
-        action: "Live Stopped",
-        label: "Live Stream",
-        value: duration,
-      });
     }
   }, [duration]);
 
@@ -72,7 +65,6 @@ function Home({ profile, dispatch }) {
       setStreamKey(stream_key);
       setReady(true);
       setIsLoading(false);
-      trackEvent({ category: eventCategory.APP_USAGE, action: "Live Created" });
     } catch (error) {
       setIsLoading(false);
       if (error instanceof IgLoginRequiredError) {
@@ -94,18 +86,10 @@ function Home({ profile, dispatch }) {
         startTimer();
         setLive(true);
         setIsLoading(false);
-        trackEvent({
-          category: eventCategory.APP_USAGE,
-          action: "Live Started",
-        });
       } catch (error) {
         setIsLoading(false);
         setReady(false);
         setLive(false);
-        trackEvent({
-          category: eventCategory.APP_USAGE,
-          action: "Live Start Failed",
-        });
         if (error instanceof IgLoginRequiredError) {
           removeSession();
           history.push("/");
@@ -121,12 +105,7 @@ function Home({ profile, dispatch }) {
       if (config.SAVE_BROADCAST_TO_STORIES) {
         await client.live.addToPostLive(broadcastId);
       }
-      trackEvent({
-        category: eventCategory.APP_USAGE,
-        action: "Live Ended",
-        label: "Live Stream",
-        value: duration,
-      });
+     
     } catch (error) {
       if (error instanceof IgLoginRequiredError) {
         removeSession();
@@ -152,10 +131,7 @@ function Home({ profile, dispatch }) {
   const logout = async () => {
     removeSession();
     client.account.logout();
-    trackEvent({
-      category: eventCategory.USER_INTERACTION,
-      action: "Logout",
-    });
+    
     history.push("/");
   };
 

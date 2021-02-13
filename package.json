@@ -73,6 +73,7 @@
     "@testing-library/user-event": "^10.4.0",
     "axios": "^0.20.0",
     "copy-to-clipboard": "^3.3.1",
+    "dotenv": "^8.2.0",
     "electron-google-analytics": "^1.0.2",
     "electron-is-dev": "^1.2.0",
     "electron-squirrel-startup": "^1.0.0",
@@ -89,6 +90,7 @@
     "redux-persist": "^6.0.0",
     "semver": "^7.3.2",
     "simplebar-react": "^2.2.0",
+    "universal-analytics": "^0.4.23",
     "uuid": "^8.3.2"
   },
   "main": "public/electron.js",

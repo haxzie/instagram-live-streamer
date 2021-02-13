@@ -4,7 +4,6 @@ import styles from "./styles.module.scss";
 import StreamonLogo from "../../images/streamon-logo.svg";
 import LoadingBar from "../../components/LoadingBar";
 import axios from "axios";
-import { trackEvent, eventCategory } from "../../lib/analytics";
 
 import {
   IgLoginInvalidUserError,
@@ -65,7 +64,6 @@ function Login({ dispatch }) {
       dispatch(setUserProfile(profile));
       dispatch(setSignedIn(true));
       setLoading(false);
-      trackEvent({ category: eventCategory.USER_INTERACTION, action: "Login" });
       history.push("/home");
     } catch (error) {
       console.error({ error });
@@ -140,7 +138,6 @@ function Login({ dispatch }) {
         verificationMethod,
         trustThisDevice: 1,
       });
-      trackEvent({ category: eventCategory.USER_INTERACTION, action: "2FA SignIn"})
       completeSignIn();
       return;
     } catch (error) {

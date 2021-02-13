@@ -6,8 +6,6 @@ import Home from "../Pages/Home";
 import Portal from "../Portal";
 import { useUpdate } from "../lib/appStatusHook";
 import UpdateModal from "../components/UpdateModal";
-import { init } from "../lib/analytics"
-init()
 
 export default function App() {
   const [
