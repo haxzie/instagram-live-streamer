@@ -1,36 +1,28 @@
-import React, { useState } from 'react'
-import styles from "./styles.module.scss"
+import React, { useState } from "react";
+import styles from "./styles.module.scss";
 
-export default function Timer({ seconds }) {
+export default function Timer({ seconds, maxLimit }) {
+  const format = (time) => {
+    // Hours, minutes and seconds
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
 
-    /**
-     * Returns minutes from the given seconds
-     */
-    const getMinutes = () => {
-        if (seconds) {
-            const minutes = Math.trunc(seconds/60);
-            return minutes < 10 ? `0${minutes}`: `${minutes}`;
-        } else {
-            return `00`;
-        }
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+    if (hrs > 0) {
+      ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
     }
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
+  };
 
-    /**
-     * returns the seconds part within 60 from the given total seconds
-     */
-    const getSeconds = () => {
-        if (seconds) {
-            const ts = seconds%60
-            return ts < 10? `0${ts}` : `${ts}`;
-        } else {
-            return `00`;
-        }
-    }
-
-
-    return (
-        <div className={styles.timer}>
-            <span>{getMinutes()}:{getSeconds()}</span>
-        </div>
-    )
+  return (
+    <div className={styles.timer}>
+      <span>
+        {format(time)}/{format(maxLimit)}
+      </span>
+    </div>
+  );
 }
