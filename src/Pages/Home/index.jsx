@@ -265,7 +265,7 @@ function Home({ profile, dispatch }) {
         ) : (
           <></>
         )}
-        {isReady && isLive ? <Timer seconds={duration} /> : <></>}
+        {isReady && isLive ? <Timer seconds={duration} maxLimit={config.STREAM_LIMIT}/> : <></>}
       </div>
       {isLive ? (
         <div className={styles.popupContents}>
