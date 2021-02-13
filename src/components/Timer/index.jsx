@@ -21,7 +21,7 @@ export default function Timer({ seconds, maxLimit }) {
   return (
     <div className={styles.timer}>
       <span>
-        {format(time)}/{format(maxLimit)}
+        {format(seconds)}<span style={{ opacity: "0.5"}}>/{format(maxLimit)}</span>
       </span>
     </div>
   );
