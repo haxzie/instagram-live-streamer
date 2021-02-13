@@ -1,0 +1,1 @@
+export const STREAM_LIMIT = 14400; // 4 hours in seconds

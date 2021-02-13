@@ -15,7 +15,7 @@ export default function UpdateModal({
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{message}</p>
         <div className={styles.buttonArea}>
-            <button onClick={() => onClickClose()}>Remind me later</button>
+            {/* {<button onClick={() => onClickClose()}>Remind me later</button>} */}
             <button onClick={() => open(link)} className={styles.primary} autoFocus>Download Now</button>
         </div>
       </div>
