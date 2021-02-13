@@ -11,6 +11,17 @@
   position: relative;
   overflow: hidden;
 
+  .info {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    margin: 15px 0;
+    width: 300px;
+    padding: 10px;
+    background-color: var(--color-secondary-light);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 5px;
+  }
+
   .animate {
     transition: 0.3s all ease-in-out;
     animation-name: slide-up;

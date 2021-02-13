@@ -14,6 +14,12 @@ import CopyIcon from "../../images/copy.svg";
 import copy from "copy-to-clipboard";
 import Timer from "../../components/Timer";
 import useTimer from "../../lib/timerHook";
+import config from "../../utils/config";
+import open from "open";
+
+const openLinkInBrowser = (link) => {
+  open(link);
+};
 
 function Home({ profile, dispatch }) {
   const client = getClient();
@@ -33,7 +39,7 @@ function Home({ profile, dispatch }) {
   // stop the live stream if it crosses 1 hour
   // keeping buffer of 2 seconds to stop the stream
   useEffect(() => {
-    if (duration >= 3598) {
+    if (duration >= config.STREAM_LIMIT - 2) {
       stopLiveStream();
     }
   }, [duration]);
@@ -96,7 +102,10 @@ function Home({ profile, dispatch }) {
     setIsLoading(true);
     try {
       await client.live.endBroadcast(broadcastId);
-      await client.live.addToPostLive(broadcastId);
+      if (config.SAVE_BROADCAST_TO_STORIES) {
+        await client.live.addToPostLive(broadcastId);
+      }
+     
     } catch (error) {
       if (error instanceof IgLoginRequiredError) {
         removeSession();
@@ -122,6 +131,7 @@ function Home({ profile, dispatch }) {
   const logout = async () => {
     removeSession();
     client.account.logout();
+    
     history.push("/");
   };
 
@@ -154,6 +164,20 @@ function Home({ profile, dispatch }) {
           }}
           className={styles.animate}
         >
+          <p className={styles.info}>
+            Please make sure Live Archives are enabled in your account or you
+            are recording the stream on your broadcasting software.{" "}
+            <span
+              style={{ color: "var(--color-primary)", cursor: "pointer" }}
+              onClick={() =>
+                openLinkInBrowser(
+                  "https://getstreamon.com/blog/save-your-livestreams-to-igtv"
+                )
+              }
+            >
+              Read More
+            </span>
+          </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -241,7 +265,7 @@ function Home({ profile, dispatch }) {
         ) : (
           <></>
         )}
-        {isReady && isLive ? <Timer seconds={duration} /> : <></>}
+        {isReady && isLive ? <Timer seconds={duration} maxLimit={config.STREAM_LIMIT}/> : <></>}
       </div>
       {isLive ? (
         <div className={styles.popupContents}>

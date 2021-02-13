@@ -37,7 +37,7 @@ export default function App() {
             <UpdateModal
               title="Update available!"
               message="A new version of Streamon is available, please download the latest version."
-              link="https://getstreamon.com"
+              link="https://getstreamon.com/downloads"
               onClickClose={() => setShowUpdateModal(false)}
             />
           </Portal>
