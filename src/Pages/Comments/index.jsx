@@ -24,6 +24,8 @@ function Comments({
   const [userComment, setUserComment] = useState("");
   const [isCommenting, setCommenting] = useState(false);
   const [pinnedComment, setPinnedComment] = useState();
+  const [isFetchingComments, setFetchingComments] = useState(false);
+
   const client = getClient();
   let lastCommentTs =
     comments && comments.length > 0 ? comments[0].created_at : 0;
@@ -31,7 +33,9 @@ function Comments({
   const startComments = async () => {
     setInProgress(true);
     window.refreshInterval = setInterval(() => {
-      fetchComments();
+      if (!isFetchingComments) {
+        fetchComments();
+      }
     }, 2000);
     setInProgress(false);
   };
@@ -46,6 +50,7 @@ function Comments({
   };
 
   const fetchComments = async () => {
+    setFetchingComments(true);
     try {
       const { comments } = await client.live.getComment({
         broadcastId,
@@ -60,6 +65,7 @@ function Comments({
     } catch (error) {
       console.error(error);
     }
+    setFetchingComments(false);
   };
 
   const pinComment = async (comment) => {
