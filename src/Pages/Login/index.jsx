@@ -49,6 +49,8 @@ function Login({ dispatch }) {
     try {
       const profile = await client.account.currentUser();
       const accountDetails = await client.user.info(profile.pk);
+
+      console.log({ profile, accountDetails })
       // save user info in the server
       axios
         .post(

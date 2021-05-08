@@ -18,7 +18,7 @@
     width: 300px;
     padding: 10px;
     background-color: var(--color-secondary-light);
-    border-left: 3px solid var(--color-primary);
+    // border-left: 3px solid var(--color-primary);
     border-radius: 5px;
   }
 
@@ -126,12 +126,14 @@
     animation-name: scale-up;
     animation-duration: 0.5s;
     position: relative;
+    background-color: #ff5500;
 
     .profilePic {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       background-color: var(--color-secondary-light);
+      border: none;
     }
 
     .liveTag {

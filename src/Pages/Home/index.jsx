@@ -36,6 +36,8 @@ function Home({ profile, dispatch }) {
   const [showComments, setShowComments] = useState(false);
   const [duration, startTimer, stopTimer, clearTimer] = useTimer(0);
 
+  console.log({ profile })
+
   // stop the live stream if it crosses 1 hour
   // keeping buffer of 2 seconds to stop the stream
   useEffect(() => {
@@ -165,18 +167,26 @@ function Home({ profile, dispatch }) {
           className={styles.animate}
         >
           <p className={styles.info}>
-            Please make sure Live Archives are enabled in your account or you
-            are recording the stream on your broadcasting software.{" "}
+            Explore our {" "}
             <span
               style={{ color: "var(--color-primary)", cursor: "pointer" }}
               onClick={() =>
                 openLinkInBrowser(
-                  "https://getstreamon.com/blog/save-your-livestreams-to-igtv"
+                  "https://getstreamon.com/blog"
                 )
               }
             >
-              Read More
-            </span>
+              📚 Guides
+            </span> to learn how to use Streamon. <span
+              style={{ color: "var(--color-primary)", cursor: "pointer" }}
+              onClick={() =>
+                openLinkInBrowser(
+                  "https://ko-fi.com/haxzie"
+                )
+              }
+            >
+              Support us 💸 
+            </span> to help keep the project alive.
           </p>
           <form
             onSubmit={(e) => {
@@ -227,7 +237,7 @@ function Home({ profile, dispatch }) {
             isLive ? styles.liveBorder : ""
           }`}
         >
-          <img src={profile_pic_url} className={styles.profilePic} />
+          <img src={`${process.env.REACT_APP_IMAGE_PROXY}/${profile_pic_url}`} className={styles.profilePic} />
           {isLive ? <span className={`${styles.liveTag}`}> Live</span> : <></>}
         </div>
         <div className={styles.texts}>
