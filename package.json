@@ -1,7 +1,7 @@
 {
   "name": "instagram-live-streamer",
   "description": "Create streaming links to instagram live",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "copyright": "Copyright © 2020 Musthaq Ahamad",
   "licence": "MIT",

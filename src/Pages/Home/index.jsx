@@ -36,6 +36,8 @@ function Home({ profile, dispatch }) {
   const [showComments, setShowComments] = useState(false);
   const [duration, startTimer, stopTimer, clearTimer] = useTimer(0);
 
+  console.log({ profile })
+
   // stop the live stream if it crosses 1 hour
   // keeping buffer of 2 seconds to stop the stream
   useEffect(() => {
@@ -227,7 +229,7 @@ function Home({ profile, dispatch }) {
             isLive ? styles.liveBorder : ""
           }`}
         >
-          <img src={profile_pic_url} className={styles.profilePic} />
+          <img src={`${process.env.REACT_APP_IMAGE_PROXY}/${profile_pic_url}`} className={styles.profilePic} />
           {isLive ? <span className={`${styles.liveTag}`}> Live</span> : <></>}
         </div>
         <div className={styles.texts}>

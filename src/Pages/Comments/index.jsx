@@ -131,7 +131,7 @@ function Comments({
   const renderComments = (comments) => {
     return comments.map((comment) => (
       <div key={comment.pk} className={styles.comment}>
-        <img className={styles.profilePic} src={comment.user.profile_pic_url} />
+        <img className={styles.profilePic} src={`${process.env.REACT_APP_IMAGE_PROXY}/${comment.user.profile_pic_url}`} />
         <div className={styles.textContainer}>
           <h4 className={styles.title}>{comment.user.username}</h4>
           <p className={styles.text}>{comment.text}</p>
@@ -155,7 +155,7 @@ function Comments({
   return (
     <div className={`${styles.commentsScreen} ${!open ? styles.close : ""}`}>
       <div className={styles.header}>
-        <img src={profile.profile_pic_url} className={styles.headerIcon} />
+        <img src={`${process.env.REACT_APP_IMAGE_PROXY}/${profile.profile_pic_url}`} className={styles.headerIcon} />
         <h2 className={styles.title}>Comments</h2>
         {!inProgress ? (
           <Toggle
