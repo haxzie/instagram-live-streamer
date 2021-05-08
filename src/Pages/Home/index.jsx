@@ -167,18 +167,26 @@ function Home({ profile, dispatch }) {
           className={styles.animate}
         >
           <p className={styles.info}>
-            Please make sure Live Archives are enabled in your account or you
-            are recording the stream on your broadcasting software.{" "}
+            Explore our {" "}
             <span
               style={{ color: "var(--color-primary)", cursor: "pointer" }}
               onClick={() =>
                 openLinkInBrowser(
-                  "https://getstreamon.com/blog/save-your-livestreams-to-igtv"
+                  "https://getstreamon.com/blog"
                 )
               }
             >
-              Read More
-            </span>
+              📚 Guides
+            </span> to learn how to use Streamon. <span
+              style={{ color: "var(--color-primary)", cursor: "pointer" }}
+              onClick={() =>
+                openLinkInBrowser(
+                  "https://ko-fi.com/haxzie"
+                )
+              }
+            >
+              Support us 💸 
+            </span> to help keep the project alive.
           </p>
           <form
             onSubmit={(e) => {
