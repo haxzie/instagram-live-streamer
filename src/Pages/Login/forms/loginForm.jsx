@@ -20,7 +20,7 @@ export default function LoginForm({ handleLogin, credError }) {
 
   return (
     <form className={styles.contents} onSubmit={handleSubmit}>
-      <h4 className={styles.formTitle}>Login to Instagram</h4>
+      <h4 className={styles.formTitle}>Login to your IG Account</h4>
       {credError ? (
         <span className={styles.error}>
           {credError === true ? "Invalid username or password" : credError}
@@ -48,8 +48,9 @@ export default function LoginForm({ handleLogin, credError }) {
         Login
       </Button>
       <div className={styles.statusTexts}>
-      <p className={styles.status}>Instagram Live Streamer { appVersion }</p>
+        <p className={styles.status}>Streamon {appVersion}</p>
         <p className={styles.author}>
+          ⚠️ Please read our&nbsp;
           <span
             className={styles.link}
             onClick={() => openLinkInBrowser("https://getstreamon.com/terms")}
@@ -64,25 +65,14 @@ export default function LoginForm({ handleLogin, credError }) {
               openLinkInBrowser("https://getstreamon.com/downloads")
             }
           >
-            Updates
+           🌀 Updates
           </span>{" "}
           •&nbsp;
           <span
             className={styles.link}
-            onClick={() =>
-              openLinkInBrowser(
-                "https://github.com/haxzie/instagram-live-streamer"
-              )
-            }
+            onClick={() => openLinkInBrowser("https://ko-fi.com/haxzie")}
           >
-            GitHub
-          </span>{" "}
-          •&nbsp;
-          <span
-            className={styles.link}
-            onClick={() => openLinkInBrowser("https://twitter.com/streamonhq")}
-          >
-            Community
+            💸 Donate
           </span>
         </p>
       </div>
