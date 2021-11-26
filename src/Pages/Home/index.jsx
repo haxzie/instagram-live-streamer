@@ -153,7 +153,7 @@ function Home({ profile, dispatch }) {
     } else if (isLive) {
       return (
         <button className={styles.stopButton} onClick={stopLiveStream}>
-          Stop Steam
+          Stop Stream
         </button>
       );
     } else {
