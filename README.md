@@ -1,3 +1,4 @@
+> We're no more maintaining this app, please visit https://getstreamon.com to use the web version of the app
 # Streamon - Instagram Live Streamer [UnOfficial]
 
 > Stream to Instagram live from PC using OBS Studio or any streaming software.
